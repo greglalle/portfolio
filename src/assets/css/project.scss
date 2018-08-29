@@ -1,0 +1,432 @@
+/* Following Scroll Line On Left */
+.scroll-line-wrap{
+	position:fixed;
+	left:0;
+	top:0;
+	width:5px;
+	height:100vh;
+	.scroll-line{
+		width:100%;
+		background-color:black;
+	}
+}
+
+/* Close Button */
+.close-btn{
+	position:fixed;
+	top:-50px;
+	left:25px;
+	background-color:rgba(255,255,255,0.2);
+	padding:10px;
+	border-radius:50px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	box-shadow: none;
+	transition:0.7s ease;
+	visibility:hidden;
+	z-index:1;
+	box-shadow: 0 0 30px 0 rgba(0,0,0,.1);
+	&:hover{
+		box-shadow: 0 0 30px 0 rgba(0,0,0,.3);
+	}
+	&.btn-appear{
+		visibility:visible;
+		top:25px;
+	}
+	.close-icon{
+		width:15px;
+	}
+}
+
+/* Project Introduction */ 
+.project-intro{
+	.project-img-wrap{
+		width:35vw;
+		height:100vh;
+		transition:0.5s ease;
+		overflow:hidden;
+		.project-img{
+			height:100vh;
+			left:0;
+			background-position:center;
+			background-size:cover;
+			background-repeat:no-repeat;
+			animation: leave 1s;
+			animation-delay:1s;
+			animation-play-state: paused;
+			transform:scale(1.2);
+			&.project-img__cesu{
+				background-image:url('../assets/images/cesu.jpg');
+			}
+		}
+	}
+	.project-name-wrap{
+		position:absolute;
+		top:15%;
+		left:25vw;
+		.project-name{
+			font-size:11em;
+			font-family:"Gilroy-ExtraBold";
+			transition:0.2s ease;
+			.wrap-l{
+				.single-letter{
+					display: inline-block;
+					overflow: hidden;
+					.letter{
+						display: inline-block;
+						transition:.5s ease;
+						animation: animLetters 1s;
+						animation-delay:1s;
+						animation-play-state: paused;
+					}
+				}
+			}
+		}
+	}
+	.project-data-wrap{
+		position:absolute;
+		top:70%;
+		right:15vw;
+		display:flex;
+		.scroll-down{
+			overflow:hidden;
+			.scroll-down-line{
+				display:block;
+				width:2px;
+				height:100%;
+				background-color:black;
+				margin-right:20px;
+				animation: scrollDownLine 1s;
+				animation-iteration-count: infinite;
+				animation-timing-function: ease-out;
+				opacity:1;
+				transition:0.5s ease;
+			}
+		}
+		.data-container{
+			.project-year-wrap, .project-type-wrap{
+		    	overflow:hidden;
+		    	width:auto;
+		    	height:auto;
+		    }
+			.project-type{
+				transition:0.5s ease;
+		    	font-family:"Brandon-Regular";
+		    	font-size:40px;
+		    	line-height:1em;
+		    	animation: enterData 1s;
+				animation-delay:1s;
+				animation-play-state: paused;
+				animation-fill-mode: forwards;
+			}
+			.project-year{
+				text-align:right;
+				transition:0.5s ease;
+		    	font-family:"Brandon-Bold";
+		    	font-size:35px;
+		    	line-height:1em;
+		    	animation: enterData 1s;
+				animation-delay:1s;
+				animation-play-state: paused;
+				animation-fill-mode: forwards;
+			}
+		}
+	}
+}
+
+/* Main Section On Project Pages */
+.section{
+	padding-top:5%;
+	padding-bottom:5%;
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+	&.padding-b{
+		padding-bottom:300px;
+	}
+	&.padding-t{
+		padding-top:300px;
+	}
+	.s-center{ /* Centered block */
+		width:80%;
+	}
+	.s-left{ /* Left block */
+		display: flex;
+    	align-items: center;
+    	justify-content: center;
+		width:50%;
+		&.s-left-text{
+			display:flex;
+		}
+	}
+	.s-right{ /* Right Block */
+		display: flex;
+    	align-items: center;
+    	justify-content: center;
+		width:50%;
+		&.s-right-img{
+			position:relative;
+			height:70vh;
+		}
+		.p-img-right{
+			transform: translateY(-50%);
+		    position: absolute;
+		    right: 0;
+		    top: 50%;
+		    width: 0;
+		    height: 100%;
+		    background-image: url(/dist/cesu.jpg?dd7de3a…);
+		    background-position: center;
+		    background-size: cover;
+		    transition:1.2s ease;
+			transition-delay:0.5s;
+		    &.imgR-in-view{
+		    	width: 60%;
+		    }
+		    &.visible{
+		    	width: 60%;
+		    }
+		}
+	}
+	.text-container{
+		display:block;
+		width:75%;
+		margin:auto;
+	}
+	/* Title */
+	.title{
+		color:black;
+		font-family:"Gilroy-Extrabold";
+		margin-top:20px;
+		margin-bottom:20px;
+		transition:1.2s ease;
+		transition-delay:0.5s;
+		opacity:0;
+		transform:translateY(25%);
+		&.title-in-view{ /* Title Animation */
+			opacity:1;
+			transform:translateY(0);
+		}
+		&.visible{ /* Title Animation */
+			opacity:1;
+			transform:translateY(0);
+		}
+	}
+	.title-white{
+		color:white;
+		/*font-family:"Gilroy-Extrabold";*/
+		margin-top:20px;
+		margin-bottom:20px;
+	}
+	/* Paragraph */
+	.p{
+		color:black;
+		font-family:"Brandon-Regular";
+		font-size:19px;
+		transition:1.2s ease;
+		transition-delay:0.7s;
+		opacity:0;
+		transform:translateY(25%);
+		&.p-in-view{
+			opacity:1;
+			transform:translateY(0);
+		}
+		&.visible{
+			opacity:1;
+			transform:translateY(0);
+		}
+	}
+	.p-white{
+		color:white;
+		font-family:"Brandon-Regular";
+		font-size:19px;
+	}
+	/* Color palette */
+	.color-palette{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		.color{
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			.color-circle{
+				display:block;
+				width:100px;
+				height:100px;
+				margin:5px;
+				opacity:0;
+				transform:translateY(25%);
+				transition:1s ease;
+				/* box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.2); */
+				&:nth-child(1){
+					transition-delay:100ms;
+				}
+				&:nth-child(2){
+					transition-delay:200ms;
+				}
+				&:nth-child(3){
+					transition-delay:300ms;
+				}
+				&:nth-child(4){
+					transition-delay:400ms;
+				}
+				&.visible{
+					opacity:1;
+					transform:translateY(0);
+				}
+				&.color-one{
+					background-color:#1564BF;
+				}
+				&.color-two{
+					background-color:#62BCFA;
+				}
+				&.color-three{
+					background-color:#EC1B5A;
+				}
+				&.color-four{
+					background-color:red;
+				}
+			}
+			.color-code{
+				font-size:16px;
+				font-family:"Brandon-Regular";
+				color:rgba(255, 255, 255, 0.7);
+				margin-top:10px;
+			}
+		}
+	}
+}
+
+/* Next Project Section */
+.next-project-container{
+	display:block;
+	height:100%;
+	width:100%;
+	/* overflow:hidden; */
+	.next-project-wrap{
+		height:100vh;
+		display:flex;
+		flex-direction:column;
+		justify-content:center;
+		align-items:center;
+		background-color:black;
+		transition-duration:0.8s;
+		transition-delay:0.3s;
+		transition-timing-function: cubic-bezier(0.49, 0.01, 0.27, 1), ease;
+		.next-project{
+			overflow:hidden;
+			font-size:14px;
+			font-family:"Brandon-Regular";
+			color:rgba(255,255,255,0.75);
+			text-transform:uppercase;
+			margin-bottom:10px;
+			p{
+				margin:0;
+				display:block;
+				transition:0.5s ease;
+				transform:translateY(100%);
+				&.visible{
+					transition:0.5s ease;
+					transform:translateY(0);
+				}
+			}
+		}
+		.next-project-name{
+			overflow:hidden;
+			position:relative;
+			&::after{
+				content:'';
+				height:51px;
+				display:block;
+				position:absolute;
+				left:0;
+				bottom:0;
+				background-color:white;
+				transition:1s ease;
+				cursor:pointer;
+			}
+			&:hover::after{
+				width:100%;
+    			transform: translate3d(102%, 0, 0);
+			}
+			a{
+				display:block;
+				font-size:50px;
+				font-family:"Gilroy-Extrabold";
+				color:white;
+				text-decoration:none;
+				position:relative;
+				transition-delay:0.3s;
+				transition:0.5s ease;
+				transform:translateY(100%);
+				&:hover{
+					color:transparent;
+					-webkit-text-stroke: 0.5px white;
+				}
+				&.visible{
+					transition:0.5s ease;
+					transform:translateY(0);
+				}
+			}	
+		}
+	}
+}
+
+
+/********** Special Animations **********/
+
+
+@keyframes leave {
+    from {
+        width:0;
+    }
+    to {
+        width:100%;
+    }
+}
+
+/* Scroll Down Indicator Animation */
+@keyframes scrollDownLine {
+    0% {
+        transform:translateY(-100%);
+    }
+    40% {
+        transform:translateY(0);
+    }
+    100% {
+        transform:translateY(100%);
+    }
+}
+
+/* Project Name Animation */
+@keyframes animLetters {
+    from {
+        transform:translateX(-100%);
+    }
+    to {
+        transform:translateX(0);
+    }
+}
+
+/* Project Data Animation - Enter */
+@keyframes enterData{
+    from {
+        transform:translateY(-100%);
+    }
+    to {
+        transform:translateY(0);
+    }
+}
+
+/* Project Data Animation - Leave */
+@keyframes leaveData{
+    from {
+        transform:translateY(0);
+    }
+    to {
+        transform:translateY(100%);
+    }
+}
