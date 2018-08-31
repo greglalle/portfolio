@@ -3,7 +3,8 @@
 		<router-link :to="{name: 'root'}" class="close-btn">
 			<img src="../assets/images/close.png" alt="close" class="close-icon">
 		</router-link>
-		<div class="project-intro">
+		<project-intro projectIndex="1"></project-intro>
+		<!-- <div class="project-intro">
 			<div class="project-img-wrap">
 				<div class="project-img project-img__am97"></div>
 			</div>
@@ -23,7 +24,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<div class="section">
 			<div class="s-left s-left-text s-left-img">
 				<div class="text-container">
@@ -175,7 +176,8 @@
 				$(window).scroll(function() {
   					var scroll = $(window).scrollTop();
   					//console.log("scroll : " + scroll);
-  					$(".project-name").css("transform","translateY(" + scroll/10 + "px)");
+  					$(".project-name").css("transform","translateY(-" + scroll/5 + "px)");
+  					$(".project-img").css("transform","scale(1.2) translateY(-" + scroll/10 + "px)");
   					//$(".project-screenshot-fullscreen").css("transform","translateY(" + scroll/20 + "px)");
   					//$(".next-project-wrap").css("margin-top", scroll/20 + "px");
 				});
@@ -193,6 +195,43 @@
 				   lastScrollTop = st;
 				});
 
+				//Effect on fullscreen images on scroll
+				var section = $(".project-screenshot-fullscreen");
+				let currentPixel = window.pageXOffset;
+				console.log(currentPixel);
+
+				const looper = function () {
+					const newPixel = window.pageYOffset;
+					const diff = newPixel - currentPixel;
+					const speed = diff * 0.15;
+
+					section.css("transform", "skewY(" + speed + "deg)");
+
+					currentPixel = newPixel;
+
+					requestAnimationFrame(looper);
+				}
+				looper();
+
+				//Split text in lines
+				$(".p").each(function(){
+					var t = $(this);
+					var e = t.text().split(" ")
+			          , i = 0
+			          , n = 0;
+			        t.html("");
+			        for (var r = 0; r < e.length; r++) {
+			            var o = e[r];
+			            if ("" !== o) {
+			                var s = $('<span class="js-word">').text(o);
+			                t.append(s).append(" "),
+			                s.position().top > i && (i = s.position().top,
+			                n++),
+			                s.addClass("is-line-" + n)
+			            }
+			        }
+				})
+
 			})
 		}
 	}
@@ -200,7 +239,7 @@
 
 <style lang="scss">
 @import '../assets/css/project.scss';
-	.project-img__am97{
+	.img__am97{
 		background-image:url('../assets/images/am97.jpg');
 	}
 	// .scroll-line-wrap{

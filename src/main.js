@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
+import ProjectIntro from './ProjectIntro.vue'
 
 Vue.use(VueRouter)
+
+Vue.component('project-intro', ProjectIntro);
 
 const router = new VueRouter({
 	mode: 'history',
@@ -422,4 +425,6 @@ $(document).ready(function () {
 	// 	$(".work-wrap").css({"transform":"perspective(525px) translateZ(" + Z + "px) rotateX(" + XAngle + "deg) rotateY(" + YAngle + "deg)","transition":"none","-webkit-transition":"none"});
 	// 	$(".work-wrap").find("strong").css({"transform":"perspective(525px) translateZ(" + Z + "px) rotateX(" + (XAngle / 0.66) + "deg) rotateY(" + (YAngle / 0.66) + "deg)","transition":"none","-webkit-transition":"none"});
 	// }
+	
+
 });

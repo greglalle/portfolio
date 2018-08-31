@@ -68,7 +68,6 @@
 		.project-name{
 			font-size:11em;
 			font-family:"Gilroy-ExtraBold";
-			transition:0.2s ease;
 			.wrap-l{
 				.single-letter{
 					display: inline-block;
@@ -224,17 +223,60 @@
 		color:black;
 		font-family:"Brandon-Regular";
 		font-size:19px;
-		transition:1.2s ease;
-		transition-delay:0.7s;
-		opacity:0;
-		transform:translateY(25%);
-		&.p-in-view{
-			opacity:1;
-			transform:translateY(0);
-		}
+		//transition:1.2s ease;
+		//transition-delay:0.7s;
+		
+		//transform:translateY(25%);
 		&.visible{
-			opacity:1;
-			transform:translateY(0);
+			.js-word{
+				opacity:1;
+				transform:translateY(0);
+			}
+		}
+		.js-word{
+			display:inline-block;
+			position:relative;
+			opacity:0;
+			-webkit-transform: translateY(50%);
+			transform:translateY(50%);
+			transition: transform .8s,opacity .8s,-webkit-transform .8s;
+			transition-delay:0.7s;
+		}
+		.is-line-1{
+			-webkit-transition-delay: .2s;
+			transition-delay: .2s;
+		}
+		.is-line-2{
+			-webkit-transition-delay: .3s;
+			transition-delay: .3s;
+		}
+		.is-line-3{
+			-webkit-transition-delay: .4s;
+			transition-delay: .4s;
+		}
+		.is-line-4{
+			-webkit-transition-delay: .5s;
+			transition-delay: .5s;
+		}
+		.is-line-5{
+			-webkit-transition-delay: .6s;
+			transition-delay: .6s;
+		}
+		.is-line-6{
+			-webkit-transition-delay: .7s;
+			transition-delay: .7s;
+		}
+		.is-line-7{
+			-webkit-transition-delay: .8s;
+			transition-delay: .8s;
+		}
+		.is-line-8{
+			-webkit-transition-delay: .9s;
+			transition-delay: .9s;
+		}
+		.is-line-9{
+			-webkit-transition-delay: 1s;
+			transition-delay: 1s;
 		}
 	}
 	.p-white{
