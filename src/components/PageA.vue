@@ -4,27 +4,6 @@
 			<img src="../assets/images/close.png" alt="close" class="close-icon">
 		</router-link>
 		<project-intro projectIndex="0"></project-intro>
-		<!-- <div class="project-intro">
-			<div class="project-img-wrap">
-				<div class="project-img project-img__cesu"></div>
-			</div>
-			<div class="project-name-wrap">
-				<h1 class="project-name"><span class="wrap-l">Cesu 21</span></h1>
-			</div>
-			<div class="project-data-wrap">
-				<div class="scroll-down">
-					<div class="scroll-down-line"></div>
-				</div>
-				<div class="data-container">
-					<div class="project-type-wrap">
-						<div class="project-type">Website</div>
-					</div>
-					<div class="project-year-wrap">
-						<div class="project-year">2018</div>
-					</div>
-				</div>
-			</div>
-		</div> -->
 		<div class="section">
 			<div class="s-left s-left-text s-left-img">
 				<div class="text-container">
@@ -58,6 +37,13 @@
 			</div>
 		</div>
 		<div class="section">
+			<div class="banner">
+				<div class="parallax-banner">
+					<img src="../assets/images/am97.jpg">
+				</div>
+			</div>
+		</div>
+		<div class="section">
 			<div class="s-left">
 				<div class="text-container">
 					<h4 class="title">A touch of modernity.</h4>
@@ -82,16 +68,7 @@
 				<img src="../assets/images/projects/cesu/cesu-home.jpg">
 			</div>
 		</div>
-		<div class="next-project-container">
-			<div class="next-project-wrap">
-				<div class="next-project">
-					<p>Next Project</p>
-				</div>
-				<div class="next-project-name">
-					<router-link :to="{name: 'b'}">Return of the 97's</router-link>
-				</div>
-			</div>
-		</div>
+		<next-project projectId="1"></next-project>
 		<div class="scroll-line-wrap">
 			<div class="scroll-line"></div>
 		</div>
@@ -99,15 +76,9 @@
 </template>
 
 <script>
-
-const slides = require('../assets/commons/projects.json').projects
+import NextProject from '../NextProject.vue'
 	export default {
   		name:'w-cesu',
-  		props: [
-			'name',
-			'date',
-			'type'
-		],
 	  	data () {
 	      return {
 	      	
@@ -136,11 +107,6 @@ const slides = require('../assets/commons/projects.json').projects
 		mounted: function () {
 			this.$nextTick(function () { 
 
-				$('.wrap-l').each(function(){
-					$(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='single-letter'><span class='letter'>$&</span></span>"));
-				});
-
-
 				function enterPage(){
 					$(".project-img").css("animation-play-state","running");
 					$(".letter").css("animation-play-state","running");
@@ -149,13 +115,12 @@ const slides = require('../assets/commons/projects.json').projects
 					$(".project-name").css("transform","translateY(0)");
 					setTimeout(function(){
 						$(".close-btn").addClass("btn-appear");
-						//resetAnim();
-					},1000)
+					},2000)
 				}
 
 				//Animate on scroll
 				//Cache reference to window and animation items
-				var $animation_elements = $('.title, .p, .p-img-right, .next-project-name > a, .next-project > p, .color-circle');
+				var $animation_elements = $('.title, .p, .p-img-right, .color-circle');
 				var $window = $(window);
 
 				$window.on('scroll resize', check_if_in_view);
@@ -200,11 +165,11 @@ const slides = require('../assets/commons/projects.json').projects
 				// Parallax Events
 				$(window).scroll(function() {
   					var scroll = $(window).scrollTop();
-  					$(".project-name").css("transform","translateY(-" + scroll/5 + "px)");
-  					$(".project-img").css("transform","scale(1.2) translateY(-" + scroll/10 + "px)");
-  					//$(".project-screenshot-fullscreen").css("transform","translateY(" + scroll/20 + "px)");
+  						// Add parallax effects here
+  						$(".parallax-banner").css("transform","translateY(-" + scroll / 30 + "px)")
 				});
 
+				// ********** CREER UN COMPOSANT POUR CE BOUTON ********** //
 				var lastScrollTop = 0;
 				$(window).scroll(function(event){
 				   var st = $(this).scrollTop();
@@ -256,6 +221,9 @@ const slides = require('../assets/commons/projects.json').projects
 				})
 
 			})
+		},
+		components: {
+			NextProject
 		}
 	}
 </script>

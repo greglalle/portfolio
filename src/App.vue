@@ -39,7 +39,7 @@ export default {
 .fadePage-enter-active, .fadePage-leave-active {
   visibility:hidden;
   transition: visibility 0s;
-  transition-delay: 1s;
+  transition-delay: 1.5s;
 }
 
 @font-face {

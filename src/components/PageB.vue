@@ -51,7 +51,7 @@
 				<img src="../assets/images/projects/cesu/cesu-home.jpg">
 			</div>
 		</div>
-		<div class="next-project-container">
+		<!-- <div class="next-project-container">
 			<div class="next-project-wrap">
 				<div class="next-project">
 					<p>Next Project</p>
@@ -60,7 +60,8 @@
 					<router-link :to="{name: 'a'}">Cesu 21</router-link>
 				</div>
 			</div>
-		</div>
+		</div> -->
+		<next-project projectId="0"></next-project>
 		<div class="scroll-line-wrap">
 			<div class="scroll-line"></div>
 		</div>
@@ -68,11 +69,12 @@
 </template>
 
 <script>
+import NextProject from '../NextProject.vue'
 	export default {
   		name:'w-cesu',
 	  	data () {
 	      return {
-	      	show:true
+
 	      }
 	    },
 	    beforeRouteLeave (to, from, next) {
@@ -97,9 +99,6 @@
 		mounted: function () {
 			this.$nextTick(function () { 
 				
-				$('.wrap-l').each(function(){
-					$(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='single-letter'><span class='letter'>$&</span></span>"));
-				});
 				function enterPage(){
 					$(".project-img").css("animation-play-state","running");
 					$(".letter").css("animation-play-state","running");
@@ -108,14 +107,13 @@
 					$(".project-name").css("transform","translateY(0)");
 					setTimeout(function(){
 						$(".close-btn").addClass("btn-appear");
-						//resetAnim();
-					},1000)
+					},2000)
 				}
 				
 
 				//Animate on scroll
 				//Cache reference to window and animation items
-				var $animation_elements = $('.title, .p, .p-img-right, .next-project-name > a, .next-project > p');
+				var $animation_elements = $('.title, .p, .p-img-right');
 				var $window = $(window);
 
 				$window.on('scroll resize', check_if_in_view);
@@ -149,37 +147,13 @@
 				  	$title.removeClass('visible');
 				  	$paragraphe.removeClass('visible');
 				}
-				
-				// function get(){
-				//   //var test = $('.next-project-container').offset().top - $(window).scrollTop();
-				//   //console.log(test);
-				//   $('.next-project-container').offset().top = 0;
-				//   if(test <= 0){
-				//   	//console.log("OK");
-				//   };
-				// }
 
-				// if($nextProject.hasClass('ok')){
-				// 	get();
-				// }
-
-				
-				// $(window).scroll(get);
 
 				//capture scroll any percentage
 				$(window).scroll(function(){
 					var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
 	 				var scrolled = (wintop/(docheight-winheight))*100;
 	  				$('.scroll-line').css('height', (scrolled + '%'));
-				});
-
-				$(window).scroll(function() {
-  					var scroll = $(window).scrollTop();
-  					//console.log("scroll : " + scroll);
-  					$(".project-name").css("transform","translateY(-" + scroll/5 + "px)");
-  					$(".project-img").css("transform","scale(1.2) translateY(-" + scroll/10 + "px)");
-  					//$(".project-screenshot-fullscreen").css("transform","translateY(" + scroll/20 + "px)");
-  					//$(".next-project-wrap").css("margin-top", scroll/20 + "px");
 				});
 
 				var lastScrollTop = 0;
@@ -233,6 +207,9 @@
 				})
 
 			})
+		},
+		components: {
+			NextProject
 		}
 	}
 </script>

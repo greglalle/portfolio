@@ -2,10 +2,16 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
 import ProjectIntro from './ProjectIntro.vue'
+import ProjectSlides from './ProjectSlides.vue'
+import NextProject from './NextProject.vue'
+import SlideIndicator from './SlideIndicator.vue'
 
 Vue.use(VueRouter)
 
 Vue.component('project-intro', ProjectIntro);
+Vue.component('project-slides', ProjectSlides);
+Vue.component('next-project', NextProject);
+Vue.component('slide-indicator', SlideIndicator);
 
 const router = new VueRouter({
 	mode: 'history',
@@ -39,7 +45,7 @@ const router = new VueRouter({
 new Vue({
   el: '#app',
   router,
-  render: h => h(App)
+  render: h => h(App),
 })
 
 // // init controller

@@ -14,7 +14,7 @@
 /* Close Button */
 .close-btn{
 	position:fixed;
-	top:-50px;
+	top:25px;
 	left:25px;
 	background-color:rgba(255,255,255,0.2);
 	padding:10px;
@@ -22,17 +22,19 @@
 	display:flex;
 	justify-content:center;
 	align-items:center;
-	box-shadow: none;
-	transition:0.7s ease;
-	visibility:hidden;
+	opacity:0;
 	z-index:1;
 	box-shadow: 0 0 30px 0 rgba(0,0,0,.1);
+	transform:scale(0.8);
+	transition-delay:3s;
+	transition: 0.7s ease;
 	&:hover{
 		box-shadow: 0 0 30px 0 rgba(0,0,0,.3);
 	}
 	&.btn-appear{
-		visibility:visible;
-		top:25px;
+		opacity:1;
+		transform:scale(1);
+		//top:25px;
 	}
 	.close-icon{
 		width:15px;
@@ -53,7 +55,7 @@
 			background-size:cover;
 			background-repeat:no-repeat;
 			animation: leave 1s;
-			animation-delay:1s;
+			animation-delay:1.5s;
 			animation-play-state: paused;
 			transform:scale(1.2);
 			&.project-img__cesu{
@@ -76,7 +78,7 @@
 						display: inline-block;
 						transition:.5s ease;
 						animation: animLetters 1s;
-						animation-delay:1s;
+						animation-delay:1.5s;
 						animation-play-state: paused;
 					}
 				}
@@ -115,7 +117,7 @@
 		    	font-size:40px;
 		    	line-height:1em;
 		    	animation: enterData 1s;
-				animation-delay:1s;
+				animation-delay:1.5s;
 				animation-play-state: paused;
 				animation-fill-mode: forwards;
 			}
@@ -126,7 +128,7 @@
 		    	font-size:35px;
 		    	line-height:1em;
 		    	animation: enterData 1s;
-				animation-delay:1s;
+				animation-delay:1.5s;
 				animation-play-state: paused;
 				animation-fill-mode: forwards;
 			}
@@ -186,6 +188,26 @@
 		    &.visible{
 		    	width: 60%;
 		    }
+		}
+	}
+	.banner{
+		display:flex;
+		justify-content:center;
+		align-items:center;
+		width:100%;
+		height:75vh;
+		overflow:hidden;
+		.parallax-banner{
+			display:flex;
+			justify-content:center;
+			align-items:center;
+    		width: auto;
+    		height: 130%;
+			img{
+				display:block;
+				width:auto;
+				height:100%;
+			}
 		}
 	}
 	.text-container{
