@@ -166,7 +166,7 @@ import NextProject from '../NextProject.vue'
 				$(window).scroll(function() {
   					var scroll = $(window).scrollTop();
   						// Add parallax effects here
-  						$(".parallax-banner").css("transform","translateY(-" + scroll / 30 + "px)")
+  						$(".parallax-banner").css("transform","translateY(-" + scroll / 20 + "px)")
 				});
 
 				// ********** CREER UN COMPOSANT POUR CE BOUTON ********** //

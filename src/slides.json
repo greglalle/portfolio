@@ -1,0 +1,28 @@
+{
+	"slides":[
+		{
+			"slideId":"1",
+			"title":"Cesu 21",
+			"type":"Website",
+			"date":"2018",
+			"projectImg":"src/assets/images/cesu.jpg",
+			"projectLink":"a"
+		},
+		{
+			"slideId":"2",
+			"title":"Air Max 97",
+			"type":"Video Ad",
+			"date":"2017",
+			"projectImg":"src/assets/images/am97.jpg",
+			"projectLink":"b"
+		},
+		{
+			"slideId":"3",
+			"title":"Red Bull",
+			"type":"Website",
+			"date":"2018",
+			"projectImg":"src/assets/images/cesu.jpg",
+			"projectLink":"a"
+		}
+	]
+}
