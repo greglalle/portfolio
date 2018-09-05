@@ -100,9 +100,9 @@ import NextProject from '../NextProject.vue'
 			this.$nextTick(function () { 
 				
 				function enterPage(){
-					$(".project-img").css("animation-play-state","running");
-					$(".letter").css("animation-play-state","running");
-					$(".project-type, .project-year").css("animation-play-state","running");
+					//$(".project-img").css("animation-play-state","running");
+					//$(".letter").css("animation-play-state","running");
+					//$(".project-type, .project-year").css("animation-play-state","running");
 					$(".custom-mouse").css("display","none");
 					$(".project-name").css("transform","translateY(0)");
 					setTimeout(function(){

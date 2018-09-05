@@ -51,12 +51,13 @@
 		.project-img{
 			height:100vh;
 			left:0;
+			width:0;
 			background-position:center;
 			background-size:cover;
 			background-repeat:no-repeat;
-			animation: leave 1s;
-			animation-delay:1.5s;
-			animation-play-state: paused;
+			// animation: leave 1s;
+			// animation-delay:1.5s;
+			// animation-play-state: paused;
 			transform:scale(1.2);
 			&.project-img__cesu{
 				background-image:url('../assets/images/cesu.jpg');
@@ -70,6 +71,7 @@
 		.project-name{
 			font-size:11em;
 			font-family:"Gilroy-ExtraBold";
+			transition:0.2s ease;
 			.wrap-l{
 				.single-letter{
 					display: inline-block;
@@ -112,25 +114,25 @@
 		    	height:auto;
 		    }
 			.project-type{
-				transition:0.5s ease;
+				//transition:0.5s ease;
 		    	font-family:"Brandon-Regular";
 		    	font-size:40px;
 		    	line-height:1em;
-		    	animation: enterData 1s;
-				animation-delay:1.5s;
-				animation-play-state: paused;
-				animation-fill-mode: forwards;
+		  //   	animation: enterData 1s;
+				// animation-delay:1.5s;
+				// animation-play-state: paused;
+				// animation-fill-mode: forwards;
 			}
 			.project-year{
 				text-align:right;
-				transition:0.5s ease;
+				//transition:0.5s ease;
 		    	font-family:"Brandon-Bold";
 		    	font-size:35px;
 		    	line-height:1em;
-		    	animation: enterData 1s;
-				animation-delay:1.5s;
-				animation-play-state: paused;
-				animation-fill-mode: forwards;
+		  //   	animation: enterData 1s;
+				// animation-delay:1.5s;
+				// animation-play-state: paused;
+				// animation-fill-mode: forwards;
 			}
 		}
 	}
