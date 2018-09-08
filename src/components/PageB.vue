@@ -81,15 +81,15 @@ import NextProject from '../NextProject.vue'
 			console.log('removed');
 
 			function leavePage(){
-				$(".project-img-wrap").css("width","0");
-				$(".letter").css("transform","translateX(100%)");
-				$(".project-type, .project-year").css("animation","leaveData 1s");
-				$(".project-type, .project-year").css("animation-fill-mode","forwards");
+				//$(".project-img-wrap").css("width","0");
+				//$(".letter").css("transform","translateX(100%)");
+				//$(".project-type, .project-year").css("animation","leaveData 1s");
+				//$(".project-type, .project-year").css("animation-fill-mode","forwards");
 				$(".close-btn").removeClass("btn-appear");
 				$(".scroll-down-line").css("opacity","0");
-				$(".next-project-wrap").css("transform","translateY(-150%)");
-				$(".next-project-name > a, .next-project > p").css("transform","translateY(-100%)");
-				$(".next-project-name > a, .next-project > p").css("opacity","0");
+				//$(".next-project-wrap").css("transform","translateY(-150%)");
+				//$(".next-project-name > a, .next-project > p").css("transform","translateY(-100%)");
+				//$(".next-project-name > a, .next-project > p").css("opacity","0");
 				$(window).scrollTop() == 0;
 			}
 			leavePage();
@@ -104,7 +104,7 @@ import NextProject from '../NextProject.vue'
 					//$(".letter").css("animation-play-state","running");
 					//$(".project-type, .project-year").css("animation-play-state","running");
 					$(".custom-mouse").css("display","none");
-					$(".project-name").css("transform","translateY(0)");
+					//$(".project-name").css("transform","translateY(0)");
 					setTimeout(function(){
 						$(".close-btn").addClass("btn-appear");
 					},2000)

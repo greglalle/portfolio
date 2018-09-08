@@ -35,6 +35,9 @@ export default {
 			img: ['img__cesu', 'img__am97'],
 		}
 	},
+	beforeDestroy () {
+		this.leaveAnim();
+	},
 	mounted: function () {
 		this.$nextTick(function () {
 
@@ -56,25 +59,34 @@ export default {
 	methods: {
 		appearAnim(){
 			var tl = new TimelineLite();
-			tl.delay(0.75); // Delay before animations starts
+			tl.delay(2); // Delay before animations starts
 
 			var projectLetters = $(".letter");
 
-			tl.set(projectLetters, {x:-700})
+			tl.set(projectLetters, {x:-150})
 				.set(this.$refs.projectImg, {width:"0"})
-				.set([this.$refs.projectYear, this.$refs.projectType], {y:-200});
+				.set([this.$refs.projectYear, this.$refs.projectType], {y:-40});
 
-			tl.to(projectLetters, 1.5, {x:0, ease: Expo.easeOut})
-				.to(this.$refs.projectImg, 1.5, {width:"100%", ease: Expo.easeOut})
-				.to([this.$refs.projectYear, this.$refs.projectType], 1, {y:0, easeOut: Expo.ease});
-
-			// tl.set(this.$refs.projectImg, {width:"0"});
-			// tl.to(this.$refs.projectImg, 1, {width:"100%", ease: Expo.ease, immediateRender:false});
-
-			// tl.set([this.$refs.projectYear, this.$refs.projectType], {y:-200});
-			// tl.to([this.$refs.projectYear, this.$refs.projectType], 1, {y:0, ease: Expo.ease, immediateRender:false});
+			tl.to(projectLetters, 1, {x:0, ease: Expo.easeIn})
+				.to(this.$refs.projectImg, 1, {width:"100%", ease: Expo.easeOut})
+				.to([this.$refs.projectYear, this.$refs.projectType], 1, {y:0, ease: Expo.easeOut}, '-=1');
 
 			console.log("appearAnim")
+		},
+		leaveAnim(){
+			var tl = new TimelineLite();
+
+			var projectLetters = $(".letter");
+
+			tl.set(projectLetters, {x:0})
+			 	.set(this.$refs.projectImg, {width:"100%"})
+			 	.set([this.$refs.projectYear, this.$refs.projectType], {y:0});
+
+			tl.to(projectLetters, 1, {x:-150, ease: Expo.easeIn, immediateRender:true})
+				 .to(this.$refs.projectImg, 1, {width:"0", ease: Expo.easeOut})
+				 .to([this.$refs.projectYear, this.$refs.projectType], 1, {y:40, ease: Expo.easeIn}, '-=2');
+
+			console.log("leaveAnim")
 		}
 	}
 }

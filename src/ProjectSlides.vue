@@ -7,19 +7,19 @@
 				 </router-link>
 			</div>
 			<div class="w-data-wrap">
-				<div class="w-type">{{ type }}</div>
-				<div class="w-year">{{ date }}</div>
+				<div class="w-type" ref="slideType">{{ type }}</div>
+				<div class="w-year" ref="slideYear">{{ date }}</div>
 			</div>
 			<div class="w-img-wrap">
-				<div class="w-img" v-bind:style="{ 'backgroundImage': 'url(' + projectImg + ')' }">
+				<div class="w-img" ref="slideImg" v-bind:style="{ 'backgroundImage': 'url(' + projectImg + ')' }">
 					<!-- <div class="overlay"></div> -->
 				</div>
 			</div>
 			<div class="w-line-wrap">
 				<div class="w-line-overflow">
-					<div class="w-line"></div>
+					<div class="w-line" ref="slideLine"></div>
 				</div>
-				<div class="w-nb-wrap">
+				<div class="w-nb-wrap" ref="slideNumber">
 					<div class="w-nb-transform">
 						<div class="w-nb"></div>
 						<div class="w-viewcase">View Case</div>
@@ -31,7 +31,8 @@
 </template>
 
 <script>
-
+import {EventBus} from './assets/commons/event-bus.js'
+import { TimelineLite,  Power1 } from "gsap/TweenMax"
 const slides = require('./slides.json').slides
 
 	export default {
@@ -54,7 +55,7 @@ const slides = require('./slides.json').slides
 			  		$(".w-name").hover(function() {
 					  	$(".w-nb-transform").css("transform", "translateY(-21px)");
 					  	$(".w-line").css("transform", "translateY(-20%)");
-					  	$(".w-img").css("transform", "scale(1.1)");
+					  	$(".w-img").css("transform", "scale(1.03)");
 					}, function(){
 						$(".w-nb-transform").css("transform", "translateY(0)");
 						$(".w-line").css("transform", "translateY(0)");
@@ -142,6 +143,7 @@ const slides = require('./slides.json').slides
 							startPoint = e.pageX;
 						}
 						dragDist = 0;
+
 						$(document).on('touchmove mousemove', dragMove);
 					}
 
@@ -178,14 +180,14 @@ const slides = require('./slides.json').slides
 
 						// Effects while dragging
 						$(".custom-mouse").addClass("clicked");
-					    $(".w-img").css("transform", "scale(0.8)");
-					   	$(".w-img").css("height", "90%");
-					 	$(".w-line").css("transform", "translateY(-110%)");
-					 	$(".w-nb-wrap").css("transform", "translateY(100%)");
-					  	$(".w-type").css("transform", "translateX(-100%)");
-					  	$(".w-year").css("transform", "translateX(100%)");
-					  	$(".w-letter").css("transform","translateX(100%)");
-					  	$(".fa-caret-left, .fa-caret-right").addClass("showArrow");
+						$(".fa-caret-left, .fa-caret-right").addClass("showArrow");
+					  //   $(".w-img").css("transform", "scale(0.8)");
+					  //  	$(".w-img").css("height", "90%");
+					 	// $(".w-line").css("transform", "translateY(-110%)");
+					 	// $(".w-nb-wrap").css("transform", "translateY(100%)");
+					  // 	$(".w-type").css("transform", "translateX(-100%)");
+					  // 	$(".w-year").css("transform", "translateX(100%)");
+					  // 	$(".w-letter").css("transform","translateX(100%)");
 					}
 
 					// When stop dragging
@@ -209,20 +211,103 @@ const slides = require('./slides.json').slides
 
 						setTimeout(function() {
 							$('.slider').removeClass('dragging');
-							$(".w-img").css("transform", "scale(1)");
-						  	$(".w-img").css("height", "100%");
-						  	$(".w-line").css("transform", "translateY(0)");
-				  			$(".w-nb-wrap").css("transform", "translateY(0)");
-				  			$(".w-type").css("transform", "translateX(0)");
-			 				$(".w-year").css("transform", "translateX(0)");
-			 				$(".w-letter").css("transform","translateX(0)");
+							// $(".w-img").css("transform", "scale(1)");
+						 //  	$(".w-img").css("height", "100%"); //
+						 //  	$(".w-line").css("transform", "translateY(0)"); //
+				  	// 		$(".w-nb-wrap").css("transform", "translateY(0)"); //
+				  	// 		$(".w-type").css("transform", "translateX(0)"); //
+			 			// 	$(".w-year").css("transform", "translateX(0)"); //
+			 			// 	$(".w-letter").css("transform","translateX(0)"); //
 						}, 1600);
 					}
 
 				$(document).on('touchstart mousedown', dragStart);
+				//$(document).on('touchstart mousedown', this.dragMoveAnim);
 				$(document).on('touchend mouseup', dragEnd);
+				//$(document).on('touchend mouseup', this.dragEndAnim);
+
+				this.appearAnim();
 		  	})
-		}
+		},
+		beforeDestroy: function() {
+			this.leaveAnim();
+		},
+		methods: {
+			appearAnim(){
+				var tl = new TimelineLite();
+				tl.delay(1.5);
+
+				var slideName = $(".w-letter"),
+					lineHeight = - $(".w-line").height();
+
+				tl.set(this.$refs.slideType, {x:-100})
+					.set(this.$refs.slideYear, {x:100})
+					.set(this.$refs.slideNumber, {y:100})
+					.set(this.$refs.slideLine, {y:lineHeight})
+					.set(slideName, {x:-150})
+					.set(this.$refs.slideImg, {width:"0"});
+
+
+				tl.to(this.$refs.slideImg, 1, {width:"100%", ease: Power1.easeOut},)
+					.to([this.$refs.slideNumber,
+					   this.$refs.slideLine,], 1, {y:0, ease: Power1.easeOut}, 0)
+					.to([this.$refs.slideYear, 
+					   this.$refs.slideType], 1, {x:0, ease: Power1.easeOut}, 0)
+					.to(slideName, 1, {x:0, ease: Power1.easeOut}, 0);
+			},
+			leaveAnim(){
+				var tl = new TimelineLite();
+				//tl.delay(0);
+
+				var slideName = $(".w-letter");
+
+				tl.set(this.$refs.slideType, {x:0})
+					.set(this.$refs.slideYear, {x:0})
+					.set(this.$refs.slideNumber, {y:0})
+					.set(this.$refs.slideLine, {y:0})
+					.set(slideName, {x:0})
+					.set(this.$refs.slideImg, {width:"100%"});
+
+
+				tl.to(this.$refs.slideLine, 1, {y:-100, ease: Power1.easeIn})
+					.to(this.$refs.slideNumber, 1, {y:100, ease: Power1.easeIn}, 0)
+					.to(this.$refs.slideYear, 1, {x:150, ease: Power1.easeIn}, 0)
+					.to(this.$refs.slideType, 1, {x:-150, ease: Power1.easeIn}, 0)
+					.to(slideName, 1, {x:-150, ease: Power1.easeIn}, 0)
+					.to(this.$refs.slideImg, 1, {width:"0", ease: Power1.easeIn}, 0);
+			},
+			dragEndAnim(){
+				var tl = new TimelineLite();
+				tl.delay(1);
+
+				var slideName = $(".w-letter"),
+					lineHeight = - $(".w-line").height();
+
+				tl.fromTo(this.$refs.slideImg, 0.75, {height:"90%", scaleX:0.8, scaleY:0.8},{height:"100%", scaleX:1, scaleY:1, ease: Power1.easeOut}, 0)
+					.fromTo(this.$refs.slideLine, 0.3, {y:lineHeight},{y:0, ease: Power1.easeOut}, 1)
+					.fromTo(this.$refs.slideNumber, 0.75, {y:20},{y:0, ease: Power1.easeOut}, 1)
+					.fromTo(this.$refs.slideType, 0.75, {x:-150},{x:0, ease: Power1.easeOut}, 0)
+					.fromTo(this.$refs.slideYear, 0.75, {x:150},{x:0, ease: Power1.easeOut}, 0)
+					.fromTo(slideName, 0.75, {x:-150},{x:0, ease: Power1.easeOut}, 0);
+
+				//EventBus.$emit('i-got-clicked', this.clickCount);
+				console.log("dragEndAnim called")
+			},
+			dragMoveAnim(){
+				var tl = new TimelineLite();
+
+				var slideName = $(".w-letter"),
+					lineHeight = - $(".w-line").height();
+
+				tl.fromTo(this.$refs.slideImg, 0.75, {height:"100%", scaleX:1, scaleY:1},{height:"90%", scaleX:0.8, scaleY:0.8, ease: Power1.easeOut}, 0)
+					.fromTo(this.$refs.slideLine, 0.3, {y:0},{y:lineHeight, ease: Power1.easeOut}, 0)
+					.fromTo(this.$refs.slideNumber, 0.75, {y:0},{y:20, ease: Power1.easeOut}, 0)
+					.fromTo(this.$refs.slideType, 0.75, {x:0},{x:-150, ease: Power1.easeOut}, 0)
+					.fromTo(this.$refs.slideYear, 0.75, {x:0},{x:150, ease: Power1.easeOut}, 0)
+					.fromTo(slideName, 0.75, {x:0},{x:-150, ease: Power1.easeOut}, 0);
+				console.log("dragMoveAnim called")
+			}
+		},
 	}
 </script>
 <style lang="scss">
@@ -271,9 +356,10 @@ const slides = require('./slides.json').slides
 									overflow: hidden;
 			    					.w-letter{
 			    						display: inline-block;
-			    						transition-delay:1.5s;
-										transition:0.75s ease;
-										transform:translateX(-100%);
+			    						//transition-delay:1.5s;
+										//transition:0.75s ease;
+										transform: translate3d(-100%, 0, 0);
+										//transform:translateX(-100%);
 			    					}
 								}
 							}
@@ -287,15 +373,15 @@ const slides = require('./slides.json').slides
 					    display: block;
 					    overflow:hidden;
 					    .w-type{
-					    	transition-delay:1.5s;
-					    	transition:0.5s ease;
+					    	//transition-delay:1.5s;
+					    	//transition:0.5s ease;
 					    	font-family:"Brandon-Regular";
 					    	font-size:30px;
 					    	transform:translateX(-100%);
 					    }
 					    .w-year{
-					    	transition-delay:1.5s;
-					    	transition:0.5s ease;
+					    	//transition-delay:1.5s;
+					    	//transition:0.5s ease;
 					    	font-family:"Brandon-Regular";
 					    	font-size:25px;
 					    	transform:translateX(100%);
@@ -310,15 +396,15 @@ const slides = require('./slides.json').slides
 					    	position:relative;
 					    	width:0;
 					    	height:100%;
-					    	animation: showWork 1s;
-					    	animation-delay:1.5s;
-					    	animation-play-state: paused;
-					    	animation-fill-mode: forwards;
-					    	animation-timing-function: cubic-bezier(0.9, 0.01, 0.27, 1), ease;
+					    	//animation: showWork 1s;
+					    	//animation-delay:1.5s;
+					    	//animation-play-state: paused;
+					    	//animation-fill-mode: forwards;
+					    	//animation-timing-function: cubic-bezier(0.9, 0.01, 0.27, 1), ease;
 					    	background-position:center;
 					    	background-size:cover;
 					    	background-repeat:no-repeat;
-					    	transition:0.5s ease;
+					    	transition: transform 0.5s ease;
 					    	.overlay{
 					    		position:absolute;
 					    		top:0;
@@ -350,7 +436,7 @@ const slides = require('./slides.json').slides
 						    	width:1px;
 						    	height:100%;
 						    	background-color:black;
-						    	transition-delay:1.5s;
+						    	//transition-delay:1.5s;
 						    	transition:0.5s ease;
 						    	transform:translateY(-110%);
 						    }
@@ -358,11 +444,11 @@ const slides = require('./slides.json').slides
 					    .w-nb-wrap{
 					    	height:17px;
 					    	overflow:hidden;
-					    	transition-delay:1.5s;
-					    	transition:0.5s ease;
+					    	//transition-delay:1.5s;
+					    	//transition:0.5s ease;
 					    	transform:translateY(100%);
 					    	.w-nb-transform{
-					    		transition-delay:1.5s;
+					    		//transition-delay:1.5s;
 					    		transition:0.5s ease;
 					    		.w-nb{
 						    		text-align:center;

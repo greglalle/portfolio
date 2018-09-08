@@ -1,17 +1,17 @@
 <template>
 	<div class="next-project-container">
-		<div class="next-project-wrap">
+		<div class="next-project-wrap" ref="projectBackground">
 			<div class="next-project">
-				<p>Next Project</p>
+				<p ref="projectText">Next Project</p>
 			</div>
-			<div class="next-project-name">
-				<router-link :to="{name: nextProjectLink[projectId]}">{{ nextProjectTitle[projectId] }}</router-link>
+			<div class="next-project-name" ref="projectLink">
+				<router-link :to="{name: nextProjectLink[projectId]}" class="next-project-link" v-on:click.native="onClickAnim">{{ nextProjectTitle[projectId] }}</router-link>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-
+import { TimelineLite, Expo } from "gsap/TweenMax";
 //const slides = require('./slides.json').slides
 
 export default {
@@ -55,8 +55,27 @@ export default {
 			}
 		})
 	},
-	destroyed: function(){
-		
+	beforeDestroy: function(){
+
+	},
+	methods: {
+		onClickAnim(){
+			var tl = new TimelineLite();
+
+			var scrollTop     = $(window).scrollTop(),
+				windowHeight  = $(window).height(),
+        		elementOffset = $('.next-project-wrap').offset().top,
+        		distance      = (elementOffset - scrollTop),
+        		translateDist = - ( windowHeight + distance );
+
+			tl.set([this.$refs.projectText, this.$refs.projectLink.children], {y:0})
+				.set(this.$refs.projectBackground, {y:0});
+
+			tl.to([this.$refs.projectText, this.$refs.projectLink.children], 1, {y:-70, ease: Expo.easeIn}, '-=1')
+				.to(this.$refs.projectBackground, 1, {y:translateDist, ease: Expo.easeIn}, '-=1');
+
+			console.log("leaveAnimBottom")
+		}
 	}
 }
 </script>

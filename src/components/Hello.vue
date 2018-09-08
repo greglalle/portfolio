@@ -55,17 +55,17 @@ const slides = require('../slides.json').slides
 	    beforeRouteLeave (to, from, next) {
 			console.log('removed');
 			function onPageLeave(){
-				$(".w-img").css("animation", "hideWork 1s");
+				//$(".w-img").css("animation", "hideWork 1s"); //
 				$("html").removeClass("noScroll");
-				$(".w-letter").css("transform","translateX(-100%)");
+				//$(".w-letter").css("transform","translateX(-100%)"); //
 				$(".works-link, .contact-link").css("animation","leaveLink 1s");
 				$(".w-counter").css("animation","leaveCounter 1s");
 				$(".works-link, .contact-link, .w-counter").css("animation-play-state","running");
-				$(".w-line").css("transform", "translateY(-110%)");
-				$(".w-nb-wrap").css("transform", "translateY(100%)");
+				//$(".w-line").css("transform", "translateY(-110%)"); //
+				//$(".w-nb-wrap").css("transform", "translateY(100%)"); //
 				$(".custom-mouse").css("display","none");
-				$(".w-type").css("transform","translateX(-100%)");
-				$(".w-year").css("transform","translateX(100%)");
+				//$(".w-type").css("transform","translateX(-100%)"); //
+				//$(".w-year").css("transform","translateX(100%)"); //
 				$("body").css("position","inherit");
 				$("#my-w").css("margin","0");
 				$(".home-frame").css("border-width","0");
@@ -79,16 +79,16 @@ const slides = require('../slides.json').slides
 		    // Ce code va être exécuté seulement
 		    // une fois le rendu de la vue entière terminé
 		    function onPageEnter(){
-		    	$(".w-img").css("animation-play-state","running");
+		    	//$(".w-img").css("animation-play-state","running");
 		    	$(".works-link, .contact-link").css("animation-play-state","running");
 				$(".w-counter").css("animation-play-state","running");
 				$(".custom-mouse").css("display","block");
 				setTimeout(function(){
-					$(".w-letter").css("transform","translateX(0)");
-					$(".w-type").css("transform","translateX(0)");
-					$(".w-year").css("transform","translateX(0)");
-					$(".w-line").css("transform", "translateY(0)");
-					$(".w-nb-wrap").css("transform", "translateY(0)");
+					//$(".w-letter").css("transform","translateX(0)");
+					//$(".w-type").css("transform","translateX(0)");
+					//$(".w-year").css("transform","translateX(0)");
+					//$(".w-line").css("transform", "translateY(0)");
+					//$(".w-nb-wrap").css("transform", "translateY(0)");
 					$("body").css("position","fixed");
 					$(".home-frame").css("border-width","25px");
 				},1500)

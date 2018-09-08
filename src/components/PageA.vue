@@ -3,7 +3,7 @@
 		<router-link :to="{name: 'root'}" class="close-btn">
 			<img src="../assets/images/close.png" alt="close" class="close-icon">
 		</router-link>
-		<project-intro projectIndex="0"></project-intro>
+		<project-intro projectIndex="0" ref="projectIntro"></project-intro>
 		<div class="section">
 			<div class="s-left s-left-text s-left-img">
 				<div class="text-container">
@@ -77,6 +77,7 @@
 
 <script>
 import NextProject from '../NextProject.vue'
+
 	export default {
   		name:'w-cesu',
 	  	data () {
@@ -88,15 +89,8 @@ import NextProject from '../NextProject.vue'
 			console.log('removed');
 
 			function leavePage(){
-				$(".project-img-wrap").css("width","0");
-				$(".letter").css("transform","translateX(100%)");
-				$(".project-type, .project-year").css("animation","leaveData 1s");
-				$(".project-type, .project-year").css("animation-fill-mode","forwards");
 				$(".close-btn").removeClass("btn-appear");
 				$(".scroll-down-line").css("opacity","0");
-				$(".next-project-wrap").css("transform","translateY(-150%)");
-				$(".next-project-name > a, .next-project > p").css("transform","translateY(-100%)");
-				$(".next-project-name > a, .next-project > p").css("opacity","0");
 				var scrolled = $(window).scrollTop();
 				scrolled == 0;
 			}
@@ -108,11 +102,7 @@ import NextProject from '../NextProject.vue'
 			this.$nextTick(function () { 
 
 				function enterPage(){
-					//$(".project-img").css("animation-play-state","running");
-					//$(".letter").css("animation-play-state","running");
-					//$(".project-type, .project-year").css("animation-play-state","running");
 					$(".custom-mouse").css("display","none");
-					$(".project-name").css("transform","translateY(0)");
 					setTimeout(function(){
 						$(".close-btn").addClass("btn-appear");
 					},2000)
