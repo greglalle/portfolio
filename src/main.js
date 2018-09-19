@@ -5,6 +5,8 @@ import ProjectIntro from './ProjectIntro.vue'
 import ProjectSlides from './ProjectSlides.vue'
 import NextProject from './NextProject.vue'
 import SlideIndicator from './SlideIndicator.vue'
+import ImageGallery from './ImageGallery.vue'
+import ProjectAnimations from './ProjectAnimations.vue'
 
 Vue.use(VueRouter)
 
@@ -12,6 +14,8 @@ Vue.component('project-intro', ProjectIntro);
 Vue.component('project-slides', ProjectSlides);
 Vue.component('next-project', NextProject);
 Vue.component('slide-indicator', SlideIndicator);
+Vue.component('image-gallery', ImageGallery);
+Vue.component('project-animations', ProjectAnimations);
 
 const router = new VueRouter({
 	mode: 'history',

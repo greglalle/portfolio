@@ -49,7 +49,7 @@ export default {
 			// Parallax effect on project image and project name
 			$(window).scroll(function() {
 				var scroll = $(window).scrollTop();
-				$(".project-name").css("transform","translateY(-" + scroll/5 + "px)");
+				$(".project-name").css("transform","translateY(-" + scroll / 2 + "px)");
 				$(".project-img").css("transform","scale(1.2) translateY(-" + scroll/10 + "px)");
 			});
 
@@ -92,10 +92,91 @@ export default {
 }
 </script>
 <style lang="scss">
-	.project-name{
-		opacity:1;
-		transition: all .3s ease;
+
+/* Project Introduction */ 
+.project-intro{
+	.project-img-wrap{
+		width:35vw;
+		height:100vh;
+		transition:0.5s ease;
+		overflow:hidden;
+		.project-img{
+			height:100vh;
+			left:0;
+			width:0;
+			background-position:center;
+			background-size:cover;
+			background-repeat:no-repeat;
+			transform:scale(1.2);
+			&.project-img__cesu{
+				background-image:url('assets/images/cesu.jpg');
+			}
+		}
 	}
+	.project-name-wrap{
+		position:absolute;
+		top:15%;
+		left:25vw;
+		.project-name{
+			font-size:11em;
+			font-family:"Gilroy-ExtraBold";
+			opacity:1;
+			.wrap-l{
+				.single-letter{
+					display: inline-block;
+					overflow: hidden;
+					.letter{
+						display: inline-block;
+						transition:.5s ease;
+						animation: animLetters 1s;
+						animation-delay:1.5s;
+						animation-play-state: paused;
+					}
+				}
+			}
+		}
+	}
+	.project-data-wrap{
+		position:absolute;
+		top:70%;
+		right:15vw;
+		display:flex;
+		.scroll-down{
+			overflow:hidden;
+			.scroll-down-line{
+				display:block;
+				width:2px;
+				height:100%;
+				background-color:black;
+				margin-right:20px;
+				animation: scrollDownLine 1s;
+				animation-iteration-count: infinite;
+				animation-timing-function: ease-out;
+				opacity:1;
+				transition:0.5s ease;
+			}
+		}
+		.data-container{
+			.project-year-wrap, .project-type-wrap{
+		    	overflow:hidden;
+		    	width:auto;
+		    	height:auto;
+		    }
+			.project-type{
+		    	font-family:"Brandon-Regular";
+		    	font-size:40px;
+		    	line-height:1em;
+			}
+			.project-year{
+				text-align:right;
+		    	font-family:"Brandon-Bold";
+		    	font-size:35px;
+		    	line-height:1em;
+			}
+		}
+	}
+}
+
 	.project-name.v-enter, .project-name.v-leave{
 		opacity:0;
 	}

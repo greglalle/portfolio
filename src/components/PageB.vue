@@ -1,5 +1,6 @@
 <template>
 	<div class="global">
+		<project-animations></project-animations>
 		<router-link :to="{name: 'root'}" class="close-btn">
 			<img src="../assets/images/close.png" alt="close" class="close-icon">
 		</router-link>
@@ -37,6 +38,13 @@
 				</div>
 			</div>
 		</div>
+		<div class="section">
+			<div class="banner">
+				<!-- <div class="parallax-banner"> -->
+					<img src="../assets/images/cesu.jpg">
+				<!-- </div> -->
+			</div>
+		</div>
 		<div class="section case-background padding-b">
 			<div class="s-center">
 				<h5 class="title">Typography</h5>
@@ -70,6 +78,7 @@
 
 <script>
 import NextProject from '../NextProject.vue'
+import ProjectAnimations from '../ProjectAnimations.vue'
 	export default {
   		name:'w-cesu',
 	  	data () {
@@ -100,44 +109,10 @@ import NextProject from '../NextProject.vue'
 			this.$nextTick(function () { 
 				
 				function enterPage(){
-					//$(".project-img").css("animation-play-state","running");
-					//$(".letter").css("animation-play-state","running");
-					//$(".project-type, .project-year").css("animation-play-state","running");
 					$(".custom-mouse").css("display","none");
-					//$(".project-name").css("transform","translateY(0)");
 					setTimeout(function(){
 						$(".close-btn").addClass("btn-appear");
 					},2000)
-				}
-				
-
-				//Animate on scroll
-				//Cache reference to window and animation items
-				var $animation_elements = $('.title, .p, .p-img-right');
-				var $window = $(window);
-
-				$window.on('scroll resize', check_if_in_view);
-				$window.trigger('scroll');
-
-				function check_if_in_view() {
-				  var window_height = $window.height();
-				  var window_top_position = $window.scrollTop();
-				  var window_bottom_position = (window_top_position + window_height);
-
-				  $.each($animation_elements, function() {
-				    var $element = $(this);
-				    var element_height = $element.outerHeight();
-				    var element_top_position = $element.offset().top;
-				    var element_bottom_position = (element_top_position + element_height);
-
-				    //check to see if this current container is within viewport
-				    if ((element_bottom_position >= window_top_position) &&
-				        (element_top_position <= window_bottom_position)) {
-				      	$element.addClass('visible');
-				    } else {
-				  		//$element.removeClass('visible');
-				    }
-				  });
 				}
 
 				enterPage();
@@ -169,24 +144,6 @@ import NextProject from '../NextProject.vue'
 				   lastScrollTop = st;
 				});
 
-				//Effect on fullscreen images on scroll
-				var section = $(".project-screenshot-fullscreen");
-				let currentPixel = window.pageXOffset;
-				console.log(currentPixel);
-
-				const looper = function () {
-					const newPixel = window.pageYOffset;
-					const diff = newPixel - currentPixel;
-					const speed = diff * 0.15;
-
-					section.css("transform", "skewY(" + speed + "deg)");
-
-					currentPixel = newPixel;
-
-					requestAnimationFrame(looper);
-				}
-				looper();
-
 				//Split text in lines
 				$(".p").each(function(){
 					var t = $(this);
@@ -209,7 +166,8 @@ import NextProject from '../NextProject.vue'
 			})
 		},
 		components: {
-			NextProject
+			NextProject,
+			ProjectAnimations
 		}
 	}
 </script>
@@ -434,23 +392,23 @@ import NextProject from '../NextProject.vue'
 		// 	font-family:"Brandon-Regular";
 		// 	font-size:19px;
 		// }
-		.typo-example{
-			width:75%;
-			background-color:rgba(255, 255, 255, 0.05);
-			padding:30px;
-			box-shadow: 0 0 30px 0 rgba(0,0,0,.1);
-			margin-top:40px;
-			margin-bottom:40px;
-			.typo-name{
-				font-size:16px;
-				font-family:"Brandon-Regular";
-				color:rgba(0, 0, 0, 0.7);
-				margin-bottom:15px;
-			}
-			.typo-svg{
-				width:65%;
-			}
-		}
+		// .typo-example{
+		// 	width:75%;
+		// 	background-color:rgba(255, 255, 255, 0.05);
+		// 	padding:30px;
+		// 	box-shadow: 0 0 30px 0 rgba(0,0,0,.1);
+		// 	margin-top:40px;
+		// 	margin-bottom:40px;
+		// 	.typo-name{
+		// 		font-size:16px;
+		// 		font-family:"Brandon-Regular";
+		// 		color:rgba(0, 0, 0, 0.7);
+		// 		margin-bottom:15px;
+		// 	}
+		// 	.typo-svg{
+		// 		width:65%;
+		// 	}
+		// }
 
 		.project-screenshot-fullscreen{
 			width: 65%;

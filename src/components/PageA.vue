@@ -1,5 +1,6 @@
 <template>
 	<div class="global">
+		<project-animations></project-animations>
 		<router-link :to="{name: 'root'}" class="close-btn">
 			<img src="../assets/images/close.png" alt="close" class="close-icon">
 		</router-link>
@@ -16,51 +17,71 @@
 				</div>
 			</div>
 		</div>
-		<div class="section">
+		<div class="section single-left">
 			<div class="s-left">
+				<div class="text-container">
+					<h4 class="title">A new color palette.</h4>
+					<p class="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor.</p>
+				</div>
+			</div>
+			
+		</div>
+		<div class="section">
+			<div class="s-center">
 				<div class="color-palette">
-					<div class="color">
-						<div class="color-circle color-one"></div>
-						<div class="color-circle color-two"></div>
+					<div class="color-title">
+						<p class="p">Primary colors</p>
 					</div>
-					<div class="color">
-						<div class="color-circle color-three"></div>
-						<div class="color-circle color-two"></div>
+					<div class="color primary">
+						<div class="color-square color-one"></div>
+						<div class="color-square color-two"></div>
+						<div class="color-square color-three"></div>
+						<div class="color-square color-four"></div>
+					</div>
+					<div class="color-title">
+						<p class="p">Secondary colors</p>
+					</div>
+					<div class="color secondary">
+						<div class="color-square color-one"></div>
+						<div class="color-square color-two"></div>
+						<div class="color-square color-three"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="section single-left black-section">
+			<div class="s-left">
+				<div class="text-container">
+					<h4 class="title">A more modern typography.</h4>
+					<p class="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor.</p>
+				</div>
+			</div>
+			
+		</div>
+		<div class="section black-section">
+			<div class="s-center">
+				<img src="../assets/images/projects/cesu/cesu-typo.png" class="typo-example">
+			</div>
+		</div>
+		
+		<div class="section">
+			<div class="s-left justify-left">
+				<div class="half-block">
+					<div class="template-wrap">
+						<img src="../assets/images/projects/cesu/template-cesu-home.png" class="template">
 					</div>
 				</div>
 			</div>
 			<div class="s-right">
 				<div class="text-container">
-					<h4 class="title">A new color palette.</h4>
-					<p class="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor.</p>
+					<h4 class="title">Mobile first.</h4>
+					<p class="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor.</p>
 				</div>
 			</div>
 		</div>
 		<div class="section">
 			<div class="banner">
-				<div class="parallax-banner">
-					<img src="../assets/images/am97.jpg">
-				</div>
-			</div>
-		</div>
-		<div class="section">
-			<div class="s-left">
-				<div class="text-container">
-					<h4 class="title">A touch of modernity.</h4>
-					<p class="p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent egestas nec erat ut sollicitudin. Donec scelerisque congue tempor.</p>
-				</div>
-			</div>
-			<div class="s-right">
-				<div class="color-palette">
-					<div class="color">
-						<div class="color-circle color-one"></div>
-						<div class="color-circle color-two"></div>
-					</div>
-					<div class="color">
-						<div class="color-circle color-three"></div>
-						<div class="color-circle color-two"></div>
-					</div>
-				</div>
+					<img src="../assets/images/cesu.jpg">
 			</div>
 		</div>
 		<div class="section">
@@ -68,6 +89,12 @@
 				<img src="../assets/images/projects/cesu/cesu-home.jpg">
 			</div>
 		</div>
+		<div class="section gallery">
+			<div id="slides">
+				<image-gallery v-for="(nikeImage, index) in nikeImages" v-bind:key="nikeImage.id" 
+	    			:image01="nikeImage.image01" ></image-gallery>
+	    	</div>
+	    </div>
 		<next-project projectId="1"></next-project>
 		<div class="scroll-line-wrap">
 			<div class="scroll-line"></div>
@@ -77,9 +104,15 @@
 
 <script>
 import NextProject from '../NextProject.vue'
+import ImageGallery from '../ImageGallery.vue'
+import ProjectAnimations from '../ProjectAnimations.vue'
+const nikeImages = require('../gallery.json').nikeImages
 
 	export default {
   		name:'w-cesu',
+  		beforeCreate(){
+			this.nikeImages = nikeImages
+		},
 	  	data () {
 	      return {
 
@@ -99,7 +132,7 @@ import NextProject from '../NextProject.vue'
 			next();
 		},
 		mounted: function () {
-			this.$nextTick(function () { 
+			this.$nextTick(function () {
 
 				function enterPage(){
 					$(".custom-mouse").css("display","none");
@@ -107,56 +140,14 @@ import NextProject from '../NextProject.vue'
 						$(".close-btn").addClass("btn-appear");
 					},2000)
 				}
-
-				//Animate on scroll
-				//Cache reference to window and animation items
-				var $animation_elements = $('.title, .p, .p-img-right, .color-circle');
-				var $window = $(window);
-
-				$window.on('scroll resize', check_if_in_view);
-				$window.trigger('scroll');
-
-				function check_if_in_view() {
-				  var window_height = $window.height();
-				  var window_top_position = $window.scrollTop();
-				  var window_bottom_position = (window_top_position + window_height);
-
-				  $.each($animation_elements, function() {
-				    var $element = $(this);
-				    var element_height = $element.outerHeight();
-				    var element_top_position = $element.offset().top;
-				    var element_bottom_position = (element_top_position + element_height);
-
-				    //check to see if this current container is within viewport
-				    if ((element_bottom_position >= window_top_position) &&
-				        (element_top_position <= window_bottom_position)) {
-				  		$element.addClass('visible');
-				    } else {
-				    	//$element.removeClass('visible');
-				    }
-				  });
-				}
 				
 				enterPage();
-
-				function resetAnim(){
-					$title.removeClass('visible');
-				  	$paragraphe.removeClass('visible');
-				  	$imgRight.removeClass('visible');
-				}
 
 				//capture scroll any percentage
 				$(window).scroll(function(){
 					var wintop = $(window).scrollTop(), docheight = $(document).height(), winheight = $(window).height();
 	 				var scrolled = (wintop/(docheight-winheight))*100;
 	  				$('.scroll-line').css('height', (scrolled + '%'));
-				});
-
-				// Parallax Events
-				$(window).scroll(function() {
-  					var scroll = $(window).scrollTop();
-  						// Add parallax effects here
-  						$(".parallax-banner").css("transform","translateY(-" + scroll / 20 + "px)")
 				});
 
 				// ********** CREER UN COMPOSANT POUR CE BOUTON ********** //
@@ -174,22 +165,22 @@ import NextProject from '../NextProject.vue'
 				});
 
 				//Effect on fullscreen images on scroll
-				var section = $(".project-screenshot-fullscreen");
-				let currentPixel = window.pageXOffset;
-				console.log(currentPixel);
+				// var section = $(".project-screenshot-fullscreen");
+				// let currentPixel = window.pageXOffset;
+				// console.log(currentPixel);
 
-				const looper = function () {
-					const newPixel = window.pageYOffset;
-					const diff = newPixel - currentPixel;
-					const speed = diff * 0.15;
+				// const looper = function () {
+				// 	const newPixel = window.pageYOffset;
+				// 	const diff = newPixel - currentPixel;
+				// 	const speed = diff * 0.15;
 
-					section.css("transform", "skewY(" + speed + "deg)");
+				// 	section.css("transform", "skewY(" + speed + "deg)");
 
-					currentPixel = newPixel;
+				// 	currentPixel = newPixel;
 
-					requestAnimationFrame(looper);
-				}
-				looper();
+				// 	requestAnimationFrame(looper);
+				// }
+				// looper();
 
 				//Split text in lines
 				$(".p").each(function(){
@@ -213,7 +204,8 @@ import NextProject from '../NextProject.vue'
 			})
 		},
 		components: {
-			NextProject
+			NextProject,
+			ProjectAnimations
 		}
 	}
 </script>
@@ -223,6 +215,7 @@ import NextProject from '../NextProject.vue'
 	.img__cesu{
 		background-image:url('../assets/images/cesu.jpg');
 	}
+
 	// .scroll-line-wrap{
 	// 	position:fixed;
 	// 	left:0;
@@ -260,101 +253,6 @@ import NextProject from '../NextProject.vue'
 	// .btn-appear{
 	// 	visibility:visible;
 	// 	top:25px;
-	// }
-
-	// .project-intro{
-	// 	.project-img-wrap{
-	// 		width:35vw;
-	// 		height:100vh;
-	// 		transition:0.5s ease;
-	// 		overflow:hidden;
-	// 		.project-img{
-	// 			height:100vh;
-	// 			left:0;
-	// 			background-position:center;
-	// 			background-size:cover;
-	// 			background-repeat:no-repeat;
-	// 			animation: leave 1s;
-	// 			animation-delay:1s;
-	// 			animation-play-state: paused;
-	// 			transform:scale(1.2);
-	// 			&.project-img__cesu{
-	// 				background-image:url('../assets/images/cesu.jpg');
-	// 			}
-	// 		}
-	// 	}
-	// 	.project-name-wrap{
-	// 		position:absolute;
-	// 		top:15%;
-	// 		left:25vw;
-	// 		.project-name{
-	// 			font-size:11em;
-	// 			font-family:"Gilroy-ExtraBold";
-	// 			transition:0.2s ease;
-	// 			.wrap-l{
-	// 				.single-letter{
-	// 					display: inline-block;
-	// 					overflow: hidden;
- //    					.letter{
- //    						display: inline-block;
-	// 						transition:.5s ease;
-	// 						animation: animLetters 1s;
-	// 						animation-delay:1s;
-	// 						animation-play-state: paused;
- //    					}
-	// 				}
-	// 			}
-	// 		}
-	// 	}
-	// 	.project-data-wrap{
-	// 		position:absolute;
-	// 		top:70%;
-	// 		right:15vw;
-	// 		display:flex;
-	// 		.scroll-down{
-	// 			overflow:hidden;
-	// 			.scroll-down-line{
-	// 				display:block;
-	// 				width:2px;
-	// 				height:100%;
-	// 				background-color:black;
-	// 				margin-right:20px;
-	// 				animation: scrollDownLine 1s;
-	// 				animation-iteration-count: infinite;
-	// 				animation-timing-function: ease-out;
-	// 				opacity:1;
-	// 				transition:0.5s ease;
-	// 			}
-	// 		}
-	// 		.data-container{
-	// 			.project-year-wrap, .project-type-wrap{
-	// 		    	overflow:hidden;
-	// 		    	width:auto;
-	// 		    	height:auto;
-	// 		    }
-	// 			.project-type{
-	// 				transition:0.5s ease;
-	// 		    	font-family:"Brandon-Regular";
-	// 		    	font-size:40px;
-	// 		    	line-height:1em;
-	// 		    	animation: enterData 1s;
-	// 				animation-delay:1s;
-	// 				animation-play-state: paused;
-	// 				animation-fill-mode: forwards;
-	// 			}
-	// 			.project-year{
-	// 				text-align:right;
-	// 				transition:0.5s ease;
-	// 		    	font-family:"Brandon-Bold";
-	// 		    	font-size:35px;
-	// 		    	line-height:1em;
-	// 		    	animation: enterData 1s;
-	// 				animation-delay:1s;
-	// 				animation-play-state: paused;
-	// 				animation-fill-mode: forwards;
-	// 			}
-	// 		}
-	// 	}
 	// }
 
 	// Background color of content
@@ -450,23 +348,23 @@ import NextProject from '../NextProject.vue'
 		// 	font-family:"Brandon-Regular";
 		// 	font-size:19px;
 		// }
-		.typo-example{
-			width:75%;
-			background-color:rgba(255, 255, 255, 0.05);
-			padding:30px;
-			box-shadow: 0 0 30px 0 rgba(0,0,0,.1);
-			margin-top:40px;
-			margin-bottom:40px;
-			.typo-name{
-				font-size:16px;
-				font-family:"Brandon-Regular";
-				color:rgba(255, 255, 255, 0.7);
-				margin-bottom:15px;
-			}
-			.typo-svg{
-				width:65%;
-			}
-		}
+		// .typo-example{
+		// 	width:75%;
+		// 	background-color:rgba(255, 255, 255, 0.05);
+		// 	padding:30px;
+		// 	box-shadow: 0 0 30px 0 rgba(0,0,0,.1);
+		// 	margin-top:40px;
+		// 	margin-bottom:40px;
+		// 	.typo-name{
+		// 		font-size:16px;
+		// 		font-family:"Brandon-Regular";
+		// 		color:rgba(255, 255, 255, 0.7);
+		// 		margin-bottom:15px;
+		// 	}
+		// 	.typo-svg{
+		// 		width:65%;
+		// 	}
+		// }
 
 		// .color-palette{
 		// 	display: flex;
@@ -585,70 +483,4 @@ import NextProject from '../NextProject.vue'
 	// 		}
 	// 	}
 	// }
-
-	h2{
-		font-size:60px;
-		font-family:"Gilroy-Extrabold";
-	}
-	h3{
-		font-size:50px;
-		font-family:"Gilroy-Extrabold";
-	}
-	h4{
-		font-size:40px;
-		font-family:"Gilroy-Extrabold";
-	}
-	h5{
-		font-size:25px;
-		font-family:"Gilroy-Regular";
-		letter-spacing: 3px;
-	}
-
-
-	// @keyframes leave {
- //        from {
- //            width:0;
- //        }
- //        to {
- //            width:100%;
- //        }
- //    }
-
- //    @keyframes scrollDownLine {
- //        0% {
- //            transform:translateY(-100%);
- //        }
- //        40% {
- //            transform:translateY(0);
- //        }
- //        100% {
- //            transform:translateY(100%);
- //        }
- //    }
-
- //    @keyframes animLetters {
- //        from {
- //            transform:translateX(-100%);
- //        }
- //        to {
- //            transform:translateX(0);
- //        }
- //    }
- //    @keyframes enterData{
- //        from {
- //            transform:translateY(-100%);
- //        }
- //        to {
- //            transform:translateY(0);
- //        }
- //    }
-
- //    @keyframes leaveData{
- //        from {
- //            transform:translateY(0);
- //        }
- //        to {
- //            transform:translateY(100%);
- //        }
- //    }
 </style>

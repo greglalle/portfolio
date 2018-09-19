@@ -32,7 +32,7 @@
 
 <script>
 import {EventBus} from './assets/commons/event-bus.js'
-import { TimelineLite,  Power1 } from "gsap/TweenMax"
+import { TimelineLite,  Power1, TweenMax } from "gsap/TweenMax"
 const slides = require('./slides.json').slides
 
 	export default {
@@ -45,7 +45,11 @@ const slides = require('./slides.json').slides
 	 	],
 	 	data() {
 	 		return {
-
+	 			cNext: 0,
+	 			cPrev: 0,
+	 			nbProject: 0,
+	 			startPoint: 0,
+	 			dragDist: 0,
 	 		}
 	 	},
 	 	mounted: function () {
@@ -105,6 +109,7 @@ const slides = require('./slides.json').slides
 
 						// Change the progress bar
 						$(".w-progress-line").css("width", projectPercent * nbProject + "%");
+						console.log("not called");
 					}
 
 					// Go to next slide
@@ -129,6 +134,7 @@ const slides = require('./slides.json').slides
 						
 						// Change the progress bar
 						$(".w-progress-line").css("width", projectPercent * nbProject + "%");
+						console.log("not called");
 					}
 
 					var dragDist, startPoint;
@@ -145,6 +151,20 @@ const slides = require('./slides.json').slides
 						dragDist = 0;
 
 						$(document).on('touchmove mousemove', dragMove);
+						var tl = new TimelineLite();
+						
+
+						var slideName = $(".w-letter"),
+							lineHeight = - $(".w-line").height();
+
+						// tl.fromTo(this.$refs.slideImg, 0.75, {height:"100%", scaleX:1, scaleY:1},{height:"90%", scaleX:0.8, scaleY:0.8, ease: Power1.easeOut}, 0)
+						// 	.fromTo(this.$refs.slideLine, 0.3, {y:0},{y:lineHeight, ease: Power1.easeOut}, 0)
+						// 	.fromTo(this.$refs.slideNumber, 0.75, {y:0},{y:20, ease: Power1.easeOut}, 0)
+						// 	.fromTo(this.$refs.slideType, 0.75, {x:0},{x:-150, ease: Power1.easeOut}, 0)
+						// 	.fromTo(this.$refs.slideYear, 0.75, {x:0},{x:150, ease: Power1.easeOut}, 0)
+							//tl.fromTo(slideName, 0.75, {x:0},{x:-150, ease: Power1.easeOut}, 0);
+							console.log("not called");
+						
 					}
 
 					// When dragging
@@ -188,6 +208,8 @@ const slides = require('./slides.json').slides
 					  // 	$(".w-type").css("transform", "translateX(-100%)");
 					  // 	$(".w-year").css("transform", "translateX(100%)");
 					  // 	$(".w-letter").css("transform","translateX(100%)");
+					  console.log("not called");
+					  
 					}
 
 					// When stop dragging
@@ -219,11 +241,28 @@ const slides = require('./slides.json').slides
 			 			// 	$(".w-year").css("transform", "translateX(0)"); //
 			 			// 	$(".w-letter").css("transform","translateX(0)"); //
 						}, 1600);
+
+						// var tl = new TimelineLite();
+						// 	tl.delay(1);
+
+						// 	var slideName = $(".w-letter"),
+						// 		lineHeight = - $(".w-line").height();
+
+						// 	tl.fromTo(this.$refs.slideImg, 0.75, {height:"90%", scaleX:0.8, scaleY:0.8},{height:"100%", scaleX:1, scaleY:1, ease: Power1.easeOut}, 0)
+						// 		.fromTo(this.$refs.slideLine, 0.3, {y:lineHeight},{y:0, ease: Power1.easeOut}, 1)
+						// 		.fromTo(this.$refs.slideNumber, 0.75, {y:20},{y:0, ease: Power1.easeOut}, 1)
+						// 		.fromTo(this.$refs.slideType, 0.75, {x:-150},{x:0, ease: Power1.easeOut}, 0)
+						// 		.fromTo(this.$refs.slideYear, 0.75, {x:150},{x:0, ease: Power1.easeOut}, 0)
+						// 		.fromTo(slideName, 0.75, {x:-150},{x:0, ease: Power1.easeOut}, 0);
+
+							//EventBus.$emit('i-got-clicked', this.clickCount);
+							console.log("not called");
+							
 					}
 
-				$(document).on('touchstart mousedown', dragStart);
+				$(document).on('touchstart mousedown', this.dragStart);
 				//$(document).on('touchstart mousedown', this.dragMoveAnim);
-				$(document).on('touchend mouseup', dragEnd);
+				$(document).on('touchend mouseup', this.dragEnd);
 				//$(document).on('touchend mouseup', this.dragEndAnim);
 
 				this.appearAnim();
@@ -233,6 +272,146 @@ const slides = require('./slides.json').slides
 			this.leaveAnim();
 		},
 		methods: {
+			prevSlide(){
+				var sectionL = $('.w-section').length;
+				var projectPercent = 100 / sectionL;
+
+				this.cPrev += 1;
+				this.cNext -= 1;
+
+				if(this.cPrev >= 0){
+					$("#w-section-wrapper").css("transform", "translateX(0)");
+					this.cPrev = 0;
+					this.cNext = 0;
+				}
+				else{
+					$("#w-section-wrapper").css("transform", "translateX(" + 100 * this.cPrev + "vw)");
+				}
+
+				this.nbProject = this.cNext + 1;
+
+				// Change project number in the slide indicator
+				$(".w-current-wrap").css("transform","translateY(calc(21px * " + (-this.cNext) + "))");
+
+				// Change the progress bar
+				$(".w-progress-line").css("width", projectPercent * this.nbProject + "%");
+			},
+			nextSlide(){
+				var sectionL = $('.w-section').length;
+				var projectPercent = 100 / sectionL;
+
+				this.cPrev -= 1;
+				this.cNext += 1;
+				
+				//console.log("next : " + cNext);
+
+				if(this.cNext >= sectionL){
+					this.cNext = 2;
+					this.cPrev = -2;
+				}
+				else{
+					$("#w-section-wrapper").css("transform", "translateX(-" + 100 * this.cNext + "vw)");
+				}
+
+				this.nbProject = this.cNext + 1;
+
+				// Change project number in the slide indicator
+				$(".w-current-wrap").css("transform","translateY(calc(-21px * " + this.cNext + "))");
+				
+				// Change the progress bar
+				$(".w-progress-line").css("width", projectPercent * this.nbProject + "%");
+			},
+			dragStart(e){
+				e.preventDefault();
+				if (e.type == 'touchstart') {
+					$(document).off('mousedown', this.dragStart);
+					this.startPoint = e.originalEvent.touches[0].pageX;
+				} else {
+					this.startPoint = e.pageX;
+				}
+				this.dragDist = 0;
+
+				$(document).on('touchmove mousemove', this.dragMove);
+			},
+			dragMove(e){
+				if (e.type == 'touchmove') {
+					var movePoint = e.originalEvent.touches[0].pageX;
+				} else {
+					var movePoint = e.pageX;
+				}
+				this.dragDist = (movePoint - this.startPoint) / $("body").width() * 100;
+
+				// Add class when dragging
+				$('#w-section-wrapper').addClass('dragging');
+
+				// Skew effect when dragging
+				//$(".w-img-wrap").css("transform", "skewX(" + dragDist * 3 + "deg)");
+
+				if (this.dragDist < 0) { // Drag right (next slide)
+					// Move project while dragging
+					$("#w-section-wrapper").css("transform", "translateX(" + this.dragDist * 2 + "%)");
+
+					// Move right arrow of the cursor
+					$(".fa-caret-right").addClass("dragLeft");
+				}
+
+				if (this.dragDist > 0) { // Drag left (previous slide)
+					// Move project while dragging
+					$("#w-section-wrapper").css("transform", "translateX(" + this.dragDist / 2 + "%)");
+
+					// Move left arrow of the cursor
+					$(".fa-caret-left").addClass("dragRight");
+				}
+				$(".w-img, .w-line, .w-nb-wrap, .w-type, .w-year, .w-letter").addClass("transition-timing");
+				// Effects while dragging
+				$(".custom-mouse").addClass("clicked");
+				$(".fa-caret-left, .fa-caret-right").addClass("showArrow");
+				$(".w-img").css("transform", "scale(0.8)");
+			   	$(".w-img").css("height", "90%");
+			 	$(".w-line").css("transform", "translateY(-110%)");
+			 	$(".w-nb-wrap").css("transform", "translateY(100%)");
+			  	$(".w-type").css("transform", "translateX(-100%)");
+			  	$(".w-year").css("transform", "translateX(100%)");
+			  	$(".w-letter").css("transform","translateX(100%)");
+
+				//TweenLite.delayedCall(1, this.dragMoveAnim); 
+				//this.dragMoveAnim();
+			},
+			dragEnd(){
+				$(document).off('touchmove mousemove', this.dragMove);
+
+				// Remove skew effect
+				//$(".w-img-wrap").css("transform", "skewX(0deg)");
+
+				// Remove effect on arrows
+				$(".fa-caret-right").removeClass("dragLeft");
+				$(".fa-caret-left").removeClass("dragRight");
+
+				if (this.dragDist > 0) {
+					this.prevSlide()
+				}
+
+				if (this.dragDist < 0) {
+					this.nextSlide()
+				}
+
+				$(".w-img, .w-line, .w-nb-wrap, .w-type, .w-year, .w-letter").addClass("transition-timing");
+
+				setTimeout(function() {
+					$('.slider').removeClass('dragging');
+					$(".w-img").css("transform", "scale(1)");
+				  	$(".w-img").css("height", "100%");
+				  	$(".w-line").css("transform", "translateY(0)");
+		  			$(".w-nb-wrap").css("transform", "translateY(0)");
+		  			$(".w-type").css("transform", "translateX(0)");
+	 				$(".w-year").css("transform", "translateX(0)");
+	 				$(".w-letter").css("transform","translateX(0)");
+				}, 1600);
+
+				//TweenLite.delayedCall(1, this.dragEndAnim);
+				console.log("dragEnd");
+				//this.dragEndAnim();
+			},
 			appearAnim(){
 				var tl = new TimelineLite();
 				tl.delay(1.5);
@@ -254,8 +433,12 @@ const slides = require('./slides.json').slides
 					.to([this.$refs.slideYear, 
 					   this.$refs.slideType], 1, {x:0, ease: Power1.easeOut}, 0)
 					.to(slideName, 1, {x:0, ease: Power1.easeOut}, 0);
+
+				console.log("appearAnim called")
 			},
 			leaveAnim(){
+				$(".w-img, .w-line, .w-nb-wrap, .w-type, .w-year, .w-letter").removeClass("transition-timing");
+
 				var tl = new TimelineLite();
 				//tl.delay(0);
 
@@ -275,6 +458,8 @@ const slides = require('./slides.json').slides
 					.to(this.$refs.slideType, 1, {x:-150, ease: Power1.easeIn}, 0)
 					.to(slideName, 1, {x:-150, ease: Power1.easeIn}, 0)
 					.to(this.$refs.slideImg, 1, {width:"0", ease: Power1.easeIn}, 0);
+
+				console.log("leaveAnim called")
 			},
 			dragEndAnim(){
 				var tl = new TimelineLite();
@@ -290,7 +475,6 @@ const slides = require('./slides.json').slides
 					.fromTo(this.$refs.slideYear, 0.75, {x:150},{x:0, ease: Power1.easeOut}, 0)
 					.fromTo(slideName, 0.75, {x:-150},{x:0, ease: Power1.easeOut}, 0);
 
-				//EventBus.$emit('i-got-clicked', this.clickCount);
 				console.log("dragEndAnim called")
 			},
 			dragMoveAnim(){
@@ -305,13 +489,17 @@ const slides = require('./slides.json').slides
 					.fromTo(this.$refs.slideType, 0.75, {x:0},{x:-150, ease: Power1.easeOut}, 0)
 					.fromTo(this.$refs.slideYear, 0.75, {x:0},{x:150, ease: Power1.easeOut}, 0)
 					.fromTo(slideName, 0.75, {x:0},{x:-150, ease: Power1.easeOut}, 0);
+
 				console.log("dragMoveAnim called")
 			}
 		},
 	}
 </script>
 <style lang="scss">
-	/********** MAIN BODY **********/
+.transition-timing{
+	transition:0.5s ease;
+}
+/********** MAIN BODY **********/
 #works{
 	height:100vh;
 	#my-w{
@@ -404,7 +592,7 @@ const slides = require('./slides.json').slides
 					    	background-position:center;
 					    	background-size:cover;
 					    	background-repeat:no-repeat;
-					    	transition: transform 0.5s ease;
+					    	transition: 0.5s ease;
 					    	.overlay{
 					    		position:absolute;
 					    		top:0;
