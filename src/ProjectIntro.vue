@@ -61,30 +61,35 @@ export default {
 			var tl = new TimelineLite();
 			tl.delay(2); // Delay before animations starts
 
+			var projectSection = $(".section");
 			var projectLetters = $(".letter");
 
 			tl.set(projectLetters, {x:-150})
 				.set(this.$refs.projectImg, {width:"0"})
-				.set([this.$refs.projectYear, this.$refs.projectType], {y:-40});
+				.set([this.$refs.projectYear, this.$refs.projectType], {y:-40})
+				.set(projectSection, {opacity:0, y:0});
 
 			tl.to(projectLetters, 1, {x:0, ease: Expo.easeIn})
 				.to(this.$refs.projectImg, 1, {width:"100%", ease: Expo.easeOut})
-				.to([this.$refs.projectYear, this.$refs.projectType], 1, {y:0, ease: Expo.easeOut}, '-=1');
+				.to([this.$refs.projectYear, this.$refs.projectType], 1, {y:0, ease: Expo.easeOut}, '-=1')
+				.set(projectSection, {opacity:1, y:0});
 
 			console.log("appearAnim")
 		},
 		leaveAnim(){
 			var tl = new TimelineLite();
-
+			var projectSection = $(".section");
 			var projectLetters = $(".letter");
 
 			tl.set(projectLetters, {x:0})
 			 	.set(this.$refs.projectImg, {width:"100%"})
-			 	.set([this.$refs.projectYear, this.$refs.projectType], {y:0});
+			 	.set([this.$refs.projectYear, this.$refs.projectType], {y:0})
+			 	.set(projectSection, {opacity:1, y:0, ease: Expo.easeIn});
 
-			tl.to(projectLetters, 1, {x:-150, ease: Expo.easeIn, immediateRender:true})
+			tl.to(projectLetters, 1, {x:-150, ease: Expo.easeIn, immediateRender:true}, 0)
 				 .to(this.$refs.projectImg, 1, {width:"0", ease: Expo.easeOut})
-				 .to([this.$refs.projectYear, this.$refs.projectType], 1, {y:40, ease: Expo.easeIn}, '-=2');
+				 .to([this.$refs.projectYear, this.$refs.projectType], 1, {y:40, ease: Expo.easeIn}, 0)
+				 .to(projectSection, 1, {opacity:0, y:-300, ease: Expo.easeIn}, 0);
 
 			console.log("leaveAnim")
 		}

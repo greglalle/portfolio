@@ -54,6 +54,8 @@ const slides = require('./slides.json').slides
 	 	},
 	 	mounted: function () {
 		  	this.$nextTick(function () {
+		  			// Init home slider
+		  			this.homeSlider();
 
 		  			// Effect when hover on project's names
 			  		$(".w-name").hover(function() {
@@ -84,186 +86,8 @@ const slides = require('./slides.json').slides
 					var projectPercent = 100 / sectionL;
 		    		$(".w-progress-line").css("width", projectPercent + "%");
 
-					var cPrev = 0;
-					var cNext = 0;
-					var nbProject;
-
-					// Go to previous slide
-					function prevSlide() {
-						cPrev += 1;
-						cNext -= 1;
-
-						if(cPrev >= 0){
-							$("#w-section-wrapper").css("transform", "translateX(0)");
-							cPrev = 0;
-							cNext = 0;
-						}
-						else{
-							$("#w-section-wrapper").css("transform", "translateX(" + 100 * cPrev + "vw)");
-						}
-
-						nbProject = cNext + 1;
-
-						// Change project number in the slide indicator
-						$(".w-current-wrap").css("transform","translateY(calc(21px * " + (-cNext) + "))");
-
-						// Change the progress bar
-						$(".w-progress-line").css("width", projectPercent * nbProject + "%");
-						console.log("not called");
-					}
-
-					// Go to next slide
-					function nextSlide() {
-						cPrev -= 1;
-						cNext += 1;
-						
-						//console.log("next : " + cNext);
-
-						if(cNext >= sectionL){
-							cNext = 2;
-							cPrev = -2;
-						}
-						else{
-							$("#w-section-wrapper").css("transform", "translateX(-" + 100 * cNext + "vw)");
-						}
-
-						nbProject = cNext + 1;
-
-						// Change project number in the slide indicator
-						$(".w-current-wrap").css("transform","translateY(calc(-21px * " + cNext + "))");
-						
-						// Change the progress bar
-						$(".w-progress-line").css("width", projectPercent * nbProject + "%");
-						console.log("not called");
-					}
-
-					var dragDist, startPoint;
-
-					// Start dragging
-					function dragStart(e) {
-						e.preventDefault();
-						if (e.type == 'touchstart') {
-							$(document).off('mousedown', dragStart);
-							startPoint = e.originalEvent.touches[0].pageX;
-						} else {
-							startPoint = e.pageX;
-						}
-						dragDist = 0;
-
-						$(document).on('touchmove mousemove', dragMove);
-						var tl = new TimelineLite();
-						
-
-						var slideName = $(".w-letter"),
-							lineHeight = - $(".w-line").height();
-
-						// tl.fromTo(this.$refs.slideImg, 0.75, {height:"100%", scaleX:1, scaleY:1},{height:"90%", scaleX:0.8, scaleY:0.8, ease: Power1.easeOut}, 0)
-						// 	.fromTo(this.$refs.slideLine, 0.3, {y:0},{y:lineHeight, ease: Power1.easeOut}, 0)
-						// 	.fromTo(this.$refs.slideNumber, 0.75, {y:0},{y:20, ease: Power1.easeOut}, 0)
-						// 	.fromTo(this.$refs.slideType, 0.75, {x:0},{x:-150, ease: Power1.easeOut}, 0)
-						// 	.fromTo(this.$refs.slideYear, 0.75, {x:0},{x:150, ease: Power1.easeOut}, 0)
-							//tl.fromTo(slideName, 0.75, {x:0},{x:-150, ease: Power1.easeOut}, 0);
-							console.log("not called");
-						
-					}
-
-					// When dragging
-					function dragMove(e) {
-						if (e.type == 'touchmove') {
-							var movePoint = e.originalEvent.touches[0].pageX;
-						} else {
-							var movePoint = e.pageX;
-						}
-						dragDist = (movePoint - startPoint) / $("body").width() * 100;
-
-						// Add class when dragging
-						$('#w-section-wrapper').addClass('dragging');
-
-						// Skew effect when dragging
-						//$(".w-img-wrap").css("transform", "skewX(" + dragDist * 3 + "deg)");
-
-						if (dragDist < 0) { // Drag right (next slide)
-							// Move project while dragging
-							$("#w-section-wrapper").css("transform", "translateX(" + dragDist * 2 + "%)");
-
-							// Move right arrow of the cursor
-							$(".fa-caret-right").addClass("dragLeft");
-						}
-
-						if (dragDist > 0) { // Drag left (previous slide)
-							// Move project while dragging
-							$("#w-section-wrapper").css("transform", "translateX(" + dragDist / 2 + "%)");
-
-							// Move left arrow of the cursor
-							$(".fa-caret-left").addClass("dragRight");
-						}
-
-						// Effects while dragging
-						$(".custom-mouse").addClass("clicked");
-						$(".fa-caret-left, .fa-caret-right").addClass("showArrow");
-					  //   $(".w-img").css("transform", "scale(0.8)");
-					  //  	$(".w-img").css("height", "90%");
-					 	// $(".w-line").css("transform", "translateY(-110%)");
-					 	// $(".w-nb-wrap").css("transform", "translateY(100%)");
-					  // 	$(".w-type").css("transform", "translateX(-100%)");
-					  // 	$(".w-year").css("transform", "translateX(100%)");
-					  // 	$(".w-letter").css("transform","translateX(100%)");
-					  console.log("not called");
-					  
-					}
-
-					// When stop dragging
-					function dragEnd() {
-						$(document).off('touchmove mousemove', dragMove);
-
-						// Remove skew effect
-						//$(".w-img-wrap").css("transform", "skewX(0deg)");
-
-						// Remove effect on arrows
-						$(".fa-caret-right").removeClass("dragLeft");
-						$(".fa-caret-left").removeClass("dragRight");
-
-						if (dragDist > 0) {
-							prevSlide();
-						}
-
-						if (dragDist < 0) {
-							nextSlide();
-						}
-
-						setTimeout(function() {
-							$('.slider').removeClass('dragging');
-							// $(".w-img").css("transform", "scale(1)");
-						 //  	$(".w-img").css("height", "100%"); //
-						 //  	$(".w-line").css("transform", "translateY(0)"); //
-				  	// 		$(".w-nb-wrap").css("transform", "translateY(0)"); //
-				  	// 		$(".w-type").css("transform", "translateX(0)"); //
-			 			// 	$(".w-year").css("transform", "translateX(0)"); //
-			 			// 	$(".w-letter").css("transform","translateX(0)"); //
-						}, 1600);
-
-						// var tl = new TimelineLite();
-						// 	tl.delay(1);
-
-						// 	var slideName = $(".w-letter"),
-						// 		lineHeight = - $(".w-line").height();
-
-						// 	tl.fromTo(this.$refs.slideImg, 0.75, {height:"90%", scaleX:0.8, scaleY:0.8},{height:"100%", scaleX:1, scaleY:1, ease: Power1.easeOut}, 0)
-						// 		.fromTo(this.$refs.slideLine, 0.3, {y:lineHeight},{y:0, ease: Power1.easeOut}, 1)
-						// 		.fromTo(this.$refs.slideNumber, 0.75, {y:20},{y:0, ease: Power1.easeOut}, 1)
-						// 		.fromTo(this.$refs.slideType, 0.75, {x:-150},{x:0, ease: Power1.easeOut}, 0)
-						// 		.fromTo(this.$refs.slideYear, 0.75, {x:150},{x:0, ease: Power1.easeOut}, 0)
-						// 		.fromTo(slideName, 0.75, {x:-150},{x:0, ease: Power1.easeOut}, 0);
-
-							//EventBus.$emit('i-got-clicked', this.clickCount);
-							console.log("not called");
-							
-					}
-
-				$(document).on('touchstart mousedown', this.dragStart);
-				//$(document).on('touchstart mousedown', this.dragMoveAnim);
-				$(document).on('touchend mouseup', this.dragEnd);
-				//$(document).on('touchend mouseup', this.dragEndAnim);
+				//$(document).on('touchstart mousedown', this.dragStart);
+				//$(document).on('touchend mouseup', this.dragEnd);
 
 				this.appearAnim();
 		  	})
@@ -272,6 +96,138 @@ const slides = require('./slides.json').slides
 			this.leaveAnim();
 		},
 		methods: {
+			homeSlider(){
+
+				  var sliding = 0;
+				  var currentSlide = 0;
+				  var pixelOffset = 0;
+				  var startPixelOffset = 0;
+				  var startClientX = 0;
+				  var slideCount = $('.w-section').length;
+				  var projectPercent = 100 / slideCount;
+				  
+				  $('html').on('mousedown touchstart', slideStart);
+				  $('html').on('mouseup touchend', slideEnd);
+				  $('html').on('mousemove touchmove', slide);
+
+				  /**
+				  / Triggers when slide event started
+				  */
+				  function slideStart(event) {
+				  	event.preventDefault();
+				    // If it is mobile device redefine event to first touch point
+				    if (event.originalEvent.touches)
+				      	event = event.originalEvent.touches[0];
+				    // If sliding not started yet store current touch position to calculate distance in future.
+				    if (sliding == 0) {
+				      	sliding = 1; // Status 1 = slide started.
+				      	startClientX = event.clientX;
+				    }
+				  }
+				  
+				  /** Occurs when image is being slid.
+				  */
+				  function slide(event) {
+				    event.preventDefault();
+				    if (event.originalEvent.touches)
+				      event = event.originalEvent.touches[0];
+				    // Distance of slide.
+				    var deltaSlide = event.clientX - startClientX;
+				    // If sliding started first time and there was a distance.
+				    if (sliding == 1 && deltaSlide != 0) {
+				      sliding = 2; // Set status to 'actually moving'
+				      startPixelOffset = pixelOffset; // Store current offset
+				    }
+				    
+				    //  When user move image
+				    if (sliding == 2) { 
+
+				      	// Means that user slide 1 pixel for every 1 pixel of mouse movement.
+				      	var touchPixelRatio = 0.5;
+
+				      	// Move arrows in terms of the slide direction
+				      	if(deltaSlide < 0){
+				      		$(".fa-caret-right").addClass("dragLeft");
+				      	} 
+				      	else {
+				      		$(".fa-caret-left").addClass("dragRight");
+				      	}
+
+				      // Check for user doesn't slide out of boundaries
+				      if ((currentSlide == 0 && event.clientX > startClientX) ||
+				         (currentSlide == slideCount - 1 && event.clientX < startClientX))
+				        // Set ratio to 3 means image will be moving by 3 pixels each time user moves it's pointer by 1 pixel. (Rubber-band effect)
+				        touchPixelRatio = 3;
+
+				      	// Calculate move distance.
+				      	pixelOffset = startPixelOffset + deltaSlide / touchPixelRatio;
+
+				      	// Apply moving and remove animation class
+				      	$('#w-section-wrapper').css('transform', 'translateX(' + pixelOffset + 'px').removeClass();
+
+				      	$(".w-img, .w-line, .w-nb-wrap, .w-type, .w-year, .w-letter").addClass("transition-timing");
+
+						// Effects while dragging
+						$(".custom-mouse").addClass("clicked");
+						$(".fa-caret-left, .fa-caret-right").addClass("showArrow");
+						$(".w-img").css("transform", "scale(0.8)");
+					   	$(".w-img").css("height", "90%");
+					 	$(".w-line").css("transform", "translateY(-110%)");
+					 	$(".w-nb-wrap").css("transform", "translateY(100%)");
+					  	$(".w-type").css("transform", "translateX(-100%)");
+					  	$(".w-year").css("transform", "translateX(100%)");
+					  	$(".w-letter").css("transform","translateX(100%)");
+				    }
+				  }
+				  
+				  /** When user release pointer finish slide moving.
+				  */
+				  function slideEnd(event) {
+				  	event.preventDefault();
+				    if (sliding == 2){
+				      	// Reset sliding.
+				      	sliding = 0;
+				      	// Calculate which slide need to be in view.
+				      	currentSlide = pixelOffset < startPixelOffset ? currentSlide + 1 : currentSlide -1;
+				      	// Make sure that unexisting slides weren't selected.
+				      	currentSlide = Math.min(Math.max(currentSlide, 0), slideCount - 1);
+				      	// Since in this example slide is full viewport width offset can be calculated according to it.
+				      	pixelOffset = currentSlide * -$('.w-section').width();
+				      	// pixelOffset = currentSlide * -$('body').width();
+
+				      	// Remove style from DOM (look below)
+				      	$('#temp').remove();
+				      	// Add a translate rule dynamically and asign id to it
+				      	$('<style id="temp">#w-section-wrapper.animate{transform:translateX(' + pixelOffset + 'px)}</style>').appendTo('head');
+				      	// Add animate class to slider and reset transform prop of this class.
+				      	$('#w-section-wrapper').addClass('animate').css('transform', '');
+
+				      	$(".w-img, .w-line, .w-nb-wrap, .w-type, .w-year, .w-letter").addClass("transition-timing");
+
+						setTimeout(function() {
+							$('.slider').removeClass('dragging');
+							$(".w-img").css("transform", "scale(1)");
+						  	$(".w-img").css("height", "100%");
+						  	$(".w-line").css("transform", "translateY(0)");
+				  			$(".w-nb-wrap").css("transform", "translateY(0)");
+				  			$(".w-type").css("transform", "translateX(0)");
+			 				$(".w-year").css("transform", "translateX(0)");
+			 				$(".w-letter").css("transform","translateX(0)");
+						}, 1600);
+
+				      	// Remove effect on arrows
+						$(".fa-caret-right").removeClass("dragLeft");
+						$(".fa-caret-left").removeClass("dragRight");
+
+						// Change project number in the slide indicator
+						$(".w-current-wrap").css("transform","translateY(calc(-21px * " + currentSlide + "))");
+
+						// Change the progress bar
+						$(".w-progress-line").css("width", projectPercent * (currentSlide + 1) + "%");
+				    }
+				  }
+				  
+			},
 			prevSlide(){
 				var sectionL = $('.w-section').length;
 				var projectPercent = 100 / sectionL;
@@ -417,17 +373,18 @@ const slides = require('./slides.json').slides
 				tl.delay(1.5);
 
 				var slideName = $(".w-letter"),
-					lineHeight = - $(".w-line").height();
+					lineHeight = - $(".w-line").height(),
+					imgWidth = - $(".w-img").width();
 
 				tl.set(this.$refs.slideType, {x:-100})
 					.set(this.$refs.slideYear, {x:100})
 					.set(this.$refs.slideNumber, {y:100})
 					.set(this.$refs.slideLine, {y:lineHeight})
 					.set(slideName, {x:-150})
-					.set(this.$refs.slideImg, {width:"0"});
+					.set(this.$refs.slideImg, {x:imgWidth});
 
 
-				tl.to(this.$refs.slideImg, 1, {width:"100%", ease: Power1.easeOut},)
+				tl.to(this.$refs.slideImg, 1, {x:0, ease: Power1.easeOut})
 					.to([this.$refs.slideNumber,
 					   this.$refs.slideLine,], 1, {y:0, ease: Power1.easeOut}, 0)
 					.to([this.$refs.slideYear, 
@@ -582,7 +539,7 @@ const slides = require('./slides.json').slides
 					    transition:transform 1s;
 					    .w-img{
 					    	position:relative;
-					    	width:0;
+					    	width:100%;
 					    	height:100%;
 					    	//animation: showWork 1s;
 					    	//animation-delay:1.5s;

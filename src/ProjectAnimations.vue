@@ -33,9 +33,18 @@
 
   					var banner = $(".banner");
   					var template = $(".template");
+  					var templateLength = $(".template").length;
+
+
+  					if(templateLength > 0){
+  						var template_top_position = template.offset().top;
+  						//console.log("template")
+  					} else{
+  						console.log("no template")
+  					}
 
   					var banner_top_position = banner.offset().top;
-  					var template_top_position = template.offset().top;
+  					
 
   					var window_height = $window.height();
   					var window_width = $window.width();
@@ -63,6 +72,7 @@
   						$(".banner > img").css("transform","translateY(" + parallaxLargeScreen + "px)");
   						//console.log("parallaxLargeScreen")
   					}
+
 				});
 
 			},
